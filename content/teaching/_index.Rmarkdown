@@ -1,0 +1,66 @@
++++
+
+title = "Teaching"
+date = 2020-07-06
+toc = true
+type = "docs"  # Do not modify.
+
++++
+
+
+```{r setup, include = FALSE}
+require(knitr)
+require(kableExtra)
+require(readxl)
+require(dplyr)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+history <- read_xlsx("F:/OneDrive/OneDrive - Linköpings universitet/Jobb/LiU/Arbetshistorik/Arbetshistorik.xlsx")
+
+```
+
+My career in teaching started while studying the Bachelor program *Statistik och dataanalys* at Linköping University as a teaching assistant. After graduating the Master's program *Statistics and Data Mining* in 2015 I started working at Linköping University as a lecturer (universitetsadjunkt) full-time. 
+
+# Current courses
+
+```{r}
+
+current_semester <- "VT"
+current_year <- "2020"
+
+current <- history %>% 
+  filter(År == current_year, Termin == current_semester) %>%
+  select(Kursnamn, Kurskod, "Antal hp") %>%
+  mutate(Kurskod = cell_spec(Kurskod, "html", link = paste("/teaching/", 
+                                                           tolower(Kurskod), 
+                                                           "/kursmaterial_", 
+                                                           tolower(Kurskod),
+                                                           "/",
+                                                           sep = ""))) %>%
+  rename("Course Name" = Kursnamn, "Course Code" = Kurskod, "Credits" = "Antal hp")
+
+kable(current, format = "html", align = "l", escape = FALSE) %>%
+  kable_styling(font_size = 14, 
+                full_width = FALSE, 
+                position = "left")
+
+```
+
+
+# Past courses
+
+```{r}
+
+past <- history %>% 
+  filter(År != current_year | Termin != current_semester) %>%
+  select(Kursnamn, Kurskod, "Antal hp") %>%
+  distinct() %>%
+  arrange(Kurskod)
+
+kable(past, format = "html", align = "l") %>%
+  kable_styling(font_size = 14, 
+                full_width = FALSE, 
+                position = "left")
+
+```
