@@ -24,24 +24,14 @@ My career in teaching started while studying the Bachelor program *Statistik och
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Kandidatuppsats </td>
-   <td style="text-align:left;"> <a href="/teaching/732g32/kursmaterial_732g32/" style="     ">732G32</a> </td>
-   <td style="text-align:left;"> 15.0 </td>
+   <td style="text-align:left;"> Grundläggande statistik och dataanalys </td>
+   <td style="text-align:left;"> 732G45 </td>
+   <td style="text-align:left;"> 30 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Surveymetodik med teori </td>
-   <td style="text-align:left;"> <a href="/teaching/732g38/kursmaterial_732g38/" style="     ">732G38</a> </td>
-   <td style="text-align:left;"> 7.5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Projektarbete </td>
-   <td style="text-align:left;"> <a href="/teaching/732g39/kursmaterial_732g39/" style="     ">732G39</a> </td>
-   <td style="text-align:left;"> 7.5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Statistik; teori och tillämpning i biologi </td>
-   <td style="text-align:left;"> <a href="/teaching/ndab02/kursmaterial_ndab02/" style="     ">NDAB02</a> </td>
-   <td style="text-align:left;"> 6.0 </td>
+   <td style="text-align:left;"> Statistik för internationella ekonomer </td>
+   <td style="text-align:left;"> 732G81 </td>
+   <td style="text-align:left;"> 11 </td>
   </tr>
 </tbody>
 </table>

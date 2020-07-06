@@ -26,18 +26,12 @@ My career in teaching started while studying the Bachelor program *Statistik och
 
 ```{r}
 
-current_semester <- "VT"
+current_semester <- "HT"
 current_year <- "2020"
 
 current <- history %>% 
   filter(År == current_year, Termin == current_semester) %>%
   select(Kursnamn, Kurskod, "Antal hp") %>%
-  mutate(Kurskod = cell_spec(Kurskod, "html", link = paste("/teaching/", 
-                                                           tolower(Kurskod), 
-                                                           "/kursmaterial_", 
-                                                           tolower(Kurskod),
-                                                           "/",
-                                                           sep = ""))) %>%
   rename("Course Name" = Kursnamn, "Course Code" = Kurskod, "Credits" = "Antal hp")
 
 kable(current, format = "html", align = "l", escape = FALSE) %>%

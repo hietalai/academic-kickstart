@@ -1,0 +1,150 @@
+---
+# Course title, summary, and position.
+linktitle: NDAB02
+summary: Kursmaterial för NDAB02 - Statistik; tillämpning och teori för biologer
+weight: 1
+
+# Page metadata.
+title: Introduktion
+date: "2018-09-09T00:00:00Z"
+lastmod: "2018-09-09T00:00:00Z"
+draft: false  # Is this a draft? true/false
+toc: true  # Show table of contents? true/false
+type: docs  # Do not modify.
+
+# Add menu entry to sidebar.
+# - name: Declare this menu item as a parent with ID `name`.
+# - weight: Position of link in menu.
+menu:
+  ndab02:
+    name: Introduktion
+    weight: 1
+---
+
+
+
+Detta material ämnar att ge en introduktion till statistisk analys med hjälp av programvaran R för studenter som läser kursen NDAB02.
+
+## R och RStudio
+R är ett programmeringsspråk som används väldigt frekvent inom statistikområdet. Det gränssnitt som oftast används för att "prata" med språket är RStudio.
+
+I det nedre högra fönstret kan du välja att antingen navigera runt bland mapparna på datorn, titta på utskrivna diagram, hitta olika paket som kan installeras samt använda hjälpfunktionen. Det smidigaste sättet att få hjälp med en viss funktion är att skriva till exempel `?geom_bar` och sedan trycka på Enter-tangenten i *Console*-fönstret, så kommer hjälpdokumentation till funktionen `geom_bar()` upp i nedre högra fönstret. 
+
+I samma fönster kan du även definiera för RStudio i vilken mapp du har de filer som kommer användas. Notera att de filer du importerar samt de koder du sparar måste vara i denna mapp, samt att sökvägen till mappen inte får innehålla bokstäverna Å, Ä eller Ö. Bestäm sökvägen genom att att använda `setwd()`. Förslagsvis skapar du en ny mapp med lämpligt namn på din hemkatalog som du har dina filer i.
+
+För att öppna ett textdokument där du kan skriva kod **som sedan sparas som en separat fil** går du menyvägen `File -> New File -> R Script`. Du kan även öppna en ny flik i detta fönster där annan kod kan skrivas, genom att gå till samma menyväg igen.
+
+### Grundläggande programmering i R {#basic_R}
+Det första som du bör göra när du startar en ny session i R, och har öppnat ett nytt R Script, är att ange en s.k. *arbetsmapp*. Detta är en mapp på datorn som innehåller de filer som du vill arbeta med under sessionen. Fördelen med att lägga alla filer i en och samma mapp och ange en arbetsmapp i R är att du undviker att ange långa sökvägar till filerna om du vill importera dessa till R. 
+
+För att hitta sökvägen till mappen på din dator som du sparat ner alla dina filer, behöver du öppna upp mappen i ditt operativssystems filhanterare och följa någon av följande instruktioner [instruktioner för Windows](https://www.top-password.com/blog/tag/how-to-find-file-path-windows-10/) / [instruktioner för Mac](http://osxdaily.com/2013/06/19/copy-file-folder-path-mac-os-x/). Kopiera denna sökväg och använd sedan funktionen `setwd()` för att R ska riktas mot rätt mapp på datorn. **Notera att alla `\` måste bytas ut med antingen `\\` eller `/` för att R ska kunna läsa av sökvägen korrekt.**
+
+
+```r
+## Anger en arbetsmapp på datorn med alla filer som ska användas 
+setwd("C:/Users/namn/mapp")
+```
+
+R använder sig utav s.k. *paket* med redan skapade funktioner som du kan använda dig utav för att förenkla din programmering. För att dessa funktioner ska kunna användas i din session måste du säga till R att paketet ska laddas upp i sessionen. Du kan tänka det som att du vid din arbetsbänk plockar fram en verktygslåda innehållande de verktyg som du kommer vilja använda under ditt arbete. Om du inte har verktygslådan bredvid dig kommer det bli svårt att använda något av verktygen. Laddningen av paketen kan göras med antingen funktionen `library()` eller `require()`. 
+
+Om du har en ny installation av R på datorn måste du först installera paketen på datorn (ladda ner alla filer som behövs från internet). Det är inte svårare än att använda funktionen `install.packages()` med paketets namn inuti `""` enligt koden nedan. **Detta behöver endast göras en gång för nya installationer av R!**
+
+
+```r
+## Om paketen inte finns på datorn måste de installeras. KÖRS ENDAST EN GÅNG!
+install.packages("ggplot2")
+install.packages("RColorBrewer")
+
+## Laddar paketen innehållande de funktioner som vi vill använda
+require(ggplot2)
+require(RColorBrewer)
+```
+
+Termen *funktion* har använts frekvent tidigare i texten och kan behöva förtydligas. En funktion är strukturerad på följande sätt:
+\newline
+
+`funktionens_namn(argument1, argument2)`
+
+\newline
+
+Argument är värden som styr vad funktionen gör och anges med `=` till skillnad från "vanlig" kodning där `<-` anges för att tilldela värden. En funktion börjar med en `(` och slutar men en `)`. Detta betyder att man kan skriva en funktion på både en eller flera rader. Notera att R dock måste ha någon form utav indikation att funktionen fortsätter, t.ex. ett `,` för att ange att flera argument tillkommer eller ett `+` för att koppla ihop flera funktioner, likt som kommer presenteras nedan för `ggplot2`-paketet.
+
+För att lägga till värden i R som *variabler* för sedan kan användas för vidare analys kan nedan kod göras:
+
+```r
+## Siffror anges bara som de är
+valfritt_nummer <- 3
+
+## För att man ska ange text måste de omfattas av " " för att R ska läsa de som text
+valfri_text <- "Hello world!"
+
+## En vektor med värden
+A <- c(3, 5, 3, 7)
+
+B <- c(1, 3, 2, 4)
+
+## En matris med värden
+A_2 <- matrix(A, nrow = 2)
+
+## Matematiska beräkningar kan sedan utföras med tidigare skapade variabler.
+C <- A + B
+
+D <- A * B
+
+procent <- D / sum(D) * 100
+
+## En vektor med textstränger
+ord <- c("Apelsin", "Banan", "Citron")
+```
+
+### Ladda in material
+För att kunna arbeta med datamaterial som du samlat in från någon annanstans används någon av `read.xx()`-funktionerna. Det vanligaste sättet att göra det är genom att skapa en kommaseparerad fil via exempelvis Excel och sedan importera den till R via `read.csv2()`. **Se till att kolumn- och decimalseparatorn anges enligt det format som filen har med `sep = `, och `dec = `.** Ett tips är att öppna *.csv*-filen i **Notepad++** eller annan enkel ordbehandlare för att se vilka symboler som används.
+
+
+```r
+## Laddar in datamaterial
+bil <- read.csv2("data_om_bilar.csv", dec = ".")
+elev <- read.csv2("data_om_elever.csv", dec = ".")
+```
+
+
+
+<!-- ## Flexibility -->
+
+<!-- This feature can be used for publishing content such as: -->
+
+<!-- * **Online courses** -->
+<!-- * **Project or software documentation** -->
+<!-- * **Tutorials** -->
+
+<!-- The `courses` folder may be renamed. For example, we can rename it to `docs` for software/project documentation or `tutorials` for creating an online course. -->
+
+<!-- ## Delete tutorials -->
+
+<!-- **To remove these pages, delete the `courses` folder and see below to delete the associated menu link.** -->
+
+<!-- ## Update site menu -->
+
+<!-- After renaming or deleting the `courses` folder, you may wish to update any `[[main]]` menu links to it by editing your menu configuration at `config/_default/menus.toml`. -->
+
+<!-- For example, if you delete this folder, you can remove the following from your menu configuration: -->
+
+<!-- ```toml -->
+<!-- [[main]] -->
+<!--   name = "Courses" -->
+<!--   url = "courses/" -->
+<!--   weight = 50 -->
+<!-- ``` -->
+
+<!-- Or, if you are creating a software documentation site, you can rename the `courses` folder to `docs` and update the associated *Courses* menu configuration to: -->
+
+<!-- ```toml -->
+<!-- [[main]] -->
+<!--   name = "Docs" -->
+<!--   url = "docs/" -->
+<!--   weight = 50 -->
+<!-- ``` -->
+
+<!-- ## Update the docs menu -->
+
+<!-- If you use the *docs* layout, note that the name of the menu in the front matter should be in the form `[menu.X]` where `X` is the folder name. Hence, if you rename the `courses/example/` folder, you should also rename the menu definitions in the front matter of files within `courses/example/` from `[menu.example]` to `[menu.<NewFolderName>]`. -->
