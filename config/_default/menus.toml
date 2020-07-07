@@ -29,28 +29,18 @@
   weight = 60
 
 [[teaching]]
-  name = "Svenska"
-  url = ""
-  weight = 1
-
-[[teaching]]
-  name = "English"
-  url = ""
-  weight = 10
-
-[[teaching]]
-  name = "NDAB02"
-  parent = "Svenska"
+  name = "NDAB02 (SE)"
+  parent = "Course Materials"
   url = "ndab02/"
 
 [[teaching]]
-  name = "732G12"
-  parent = "Svenska"
+  name = "732G12 (SE)"
+  parent = "Course Materials"
   url = "732G12/"
 
 [[teaching]]
-  name = "732G81"
-  parent = "English"
+  name = "732G81 (SE)"
+  parent = "Course Materials"
   url = "732G81/"
 
 
