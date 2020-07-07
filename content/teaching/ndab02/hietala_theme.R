@@ -1,4 +1,4 @@
-knitr::opts_chunk$set(echo = TRUE, fig.height = 2, fig.align = "center", fig.width = 6, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.height = 2, fig.align = "center", fig.width = 6, eval = TRUE)
 
 require(ggplot2)
 require(grid)

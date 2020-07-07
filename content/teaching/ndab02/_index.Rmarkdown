@@ -6,11 +6,17 @@ weight: 1
 
 # Page metadata.
 title: Introduktion
-date: "2018-09-09T00:00:00Z"
-lastmod: "2018-09-09T00:00:00Z"
+date: "2020-07-07"
+lastmod: "2020-07-07"
 draft: false  # Is this a draft? true/false
 toc: true  # Show table of contents? true/false
 type: docs  # Do not modify.
+
+output: 
+  language:
+    label:
+      fig: "Figur "
+      tab: "Tabell "
 
 # Add menu entry to sidebar.
 # - name: Declare this menu item as a parent with ID `name`.
@@ -18,6 +24,7 @@ type: docs  # Do not modify.
 menu:
   ndab02:
     name: Introduktion
+    parent: NDAB02
     weight: 1
 ---
 

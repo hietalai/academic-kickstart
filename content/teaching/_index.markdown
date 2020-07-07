@@ -1,7 +1,7 @@
 +++
 
 title = "Teaching"
-date = 2020-07-06
+date = "{year}"
 toc = true
 type = "docs"  # Do not modify.
 
@@ -12,7 +12,7 @@ type = "docs"  # Do not modify.
 
 My career in teaching started while studying the Bachelor program *Statistik och dataanalys* at Linköping University as a teaching assistant. After graduating the Master's program *Statistics and Data Mining* in 2015 I started working at Linköping University as a lecturer (universitetsadjunkt) full-time. 
 
-# Current courses
+## Current courses
 
 <table class="table" style="font-size: 14px; width: auto !important; ">
  <thead>
@@ -37,7 +37,7 @@ My career in teaching started while studying the Bachelor program *Statistik och
 </table>
 
 
-# Past courses
+## Past courses
 
 <table class="table" style="font-size: 14px; width: auto !important; ">
  <thead>

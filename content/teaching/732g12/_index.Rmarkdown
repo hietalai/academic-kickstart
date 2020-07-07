@@ -1,0 +1,194 @@
+---
+# Course title, summary, and position.
+linktitle: 732G12 Data Mining
+summary: Kursmaterial för 732G12 - Data Mining
+weight: 1
+
+# Page metadata.
+title: Introduktion
+date: "2020-07-07"
+lastmod: "2020-07-07"
+draft: false  # Is this a draft? true/false
+toc: true  # Show table of contents? true/false
+type: docs  # Do not modify.
+
+output: 
+  language:
+    label:
+      fig: "Figur "
+      tab: "Tabell "
+
+# Add menu entry to sidebar.
+# - name: Declare this menu item as a parent with ID `name`.
+# - weight: Position of link in menu.
+menu:
+  732G12:
+    name: Introduktion
+    parent: 732G12
+    weight: 1
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, eval = FALSE, fig.pos = 'H', fig.width = 7, fig.height = 4)
+
+xfun::pkg_load2(c("htmltools", "mime"))
+
+```
+
+Denna sida är en genomgång av funktioner och tillämpningar av maskinilärningsalgoritmer som presenteras i kursen 732G12 - Data Mining. 
+
+## Förberedelser 
+### Paket som används i kursen
+För databearbetning rekommenderas att använda `dplyr` och `tidyr` för stora förändringar samt `stringr` och `lubridate` för text- respektive datumvariabler.
+
+```{r packages_data_transformation, eval = FALSE}
+## Databearbetning
+require(dplyr)
+require(tidyr)
+require(stringr)
+require(lubridate)
+```
+
+För visualisering rekommenderas att använda `ggplot2` (tillsammans med `RColorBrewer` för tillägg av färgpaletter) samt `plotly` som tillåter funktionalitet med interaktiva diagram.
+
+```{r packages_visualization, eval = FALSE}
+## Visualisering
+require(ggplot2)
+require(RColorBrewer)
+require(lattice)
+require(plotly)
+
+```
+
+Paketen som används för de algoritmer som 732G12 behandlar är: 
+
+- `rpart` för beslut- och regressionsträd; 
+- `caret`, `e1071` och `kknn` för k-närmaste-grannar; 
+- `keras` för neurala nätverk; 
+- `cluster` för hierarkisk klustring; 
+- `dbscan` för en densitetsbaserad klustringsmetod; 
+- `kohonen` för SOM/Kohonen kartor; 
+-  samt `arules` och `arulesSequences` för associations- och sekvensanalys.
+
+```{r packages_ML, eval = FALSE}
+## Beslutsträd
+require(rpart)
+
+## KNN
+require(caret)
+require(e1071)
+require(kknn)
+
+## Neurala nätverk
+require(keras)
+
+## Klustring
+require(cluster)
+
+require(dbscan)
+require(kohonen)
+
+## Associationsanalys
+require(arules)
+
+## Sekvensanalys
+require(arulesSequences)
+
+```
+
+### Installation av `keras`
+För att vid **första gången** installera `keras` behöver en installation av Python 3.x finnas på samma dator. Det rekommenderas att installera Anaconda via följande  [länk](https://www.anaconda.com/distribution/). *För Windows-användare, glöm inte vid de sista valen att bocka för att lägga till installationsmappen till `PATH`!* 
+
+Om ni manuellt måste ändra/lägga till en Python-installation till datorns `PATH` eller om ni fortfarande får ett felmeddelande likt `Error 1 occurred creating conda environment r-tensorflow`, löses det genom [följande instruktioner](https://github.com/rstudio/keras/issues/810). 
+
+```{r install_keras, eval = FALSE}
+# Körs endast en gång vid installation av paketet
+install_keras() 
+
+# För att kunna använda keras behövs tensorflow i bakgrunden
+# Denna kod behöver köras endast en gång
+reticulate::conda_create("r-tensorflow")
+tensorflow::install_tensorflow()
+
+```
+
+### Sammanfattande funktion för modellutvärdering
+Följande funktion skapar en förväxlingsmatris samt beräknar fyra utvärderingsmått utifrån denna matris. Funktionen kan användas som den är (se till att kopiera och köra koden i er egna session) eller användas som en mall om ni vill skapa en egen funktion. Vissa paket som nämnts ovan har också egna funktioner för utvärderingsmåtten som också kan användas. 
+
+```{r class_eval_function}
+## Funktion som skapar förväxlingsmatris med tillhörande mått för klassificeringsproblem
+
+# new_data  : Materialet innehållande förklarande variabler 
+# model     : Den skattade modellen
+# true_y    : Vektor innehållande de sanna klass-värden i samma ordning som new_data
+
+class_evaluation <- function(new_data, model, true_y, type = "class", digits = 3){
+  # Predikterar klassen för new_data givet den skattade modellen
+  if(any(str_detect(class(model), pattern = "keras"))){
+    pred <- predict_classes(model, new_data)  
+  } else {
+    pred <- predict(model, newdata = new_data, type = type)  
+  }
+  
+  # Konverterar de predikterade klasserna till en faktor med samma nivåer som de sanna klasserna
+  pred <- factor(pred, levels = levels(factor(true_y)))
+  
+  # Skapar förväxlingsmatris med rader som indikerar sanna klassen och kolumnen som indikerar predikterade klassen
+  confusion <- table(true_y, pred)
+  
+  # Träffsäkerhet är antalet korrekta prediktioner dividerat med antalet observationer
+  accuracy <- sum(diag(confusion)) / sum(confusion)
+  
+  # Felkvoten är 1 - träffsäkerheten
+  misclass <- 1 - accuracy
+  
+  # Sensitivitet är antalet korrekta prediktioner AV DEN NUVARANDE KLASSEN dividerat med antalet observationer AV DEN NUVARANDE KLASSEN
+  sensitivity <- diag(confusion) / rowSums(confusion) 
+  
+  # Specificitet är antalet korrekta prediktioner AV ICKE DEN NUVARANDE KLASSEN dividerat med antalet observationer AV ICKE DEN NUVARANDE KLASSEN
+  specificity <- NULL
+  for(i in 1:nrow(confusion)){
+     specificity[i] <- sum(confusion[-i, -i])/sum(confusion[-i, ])
+  }
+
+  # Sammanställer alla resultat i en egen lista som sedan returneras
+  evaluation <- list(confusion_matrix = confusion, 
+                     overall = 
+                       cbind(acc = accuracy, 
+                             mis = misclass),
+                     class_wise = 
+                       rbind(sensitivity = round(sensitivity, digits = digits),
+                             specificity = round(specificity, digits = digits))
+                     )
+  
+  return(evaluation)
+}
+```
+
+### Inläsning av data
+Data importeras i form av csv-filer med funktionen `read.csv()` eller `read.csv2()` beroende på strukturen på filen. Det rekommenderas att arbeta med csv-filer eftersom filen sparas som ren text och kan användas i flera olika program utan vidare krav. 
+
+Notera att för responsvariabeln för klassificering behöver konverteras till en `factor` för att modellerna ska skattas korrekt. Om detta inte görs kommer modellerna (ofta) beräkna en regressionsmodell istället. Alla datamaterial som används i detta underlag kan hämtas från antingen datamängder som finns inbyggda i R eller via `r xfun::embed_dir('data_sets', text = 'följande länk')`.
+
+```{r import_data}
+
+## Laddar träningsdata
+data_class <- data(iris)
+
+## Data för associationsanalys
+data_assoc <- read.csv2(file = "data_sets/D2 Data/marbas.csv")
+
+## Data för sekvensanalys
+data_seq <- read.csv2(file = "data_sets/D2 Data/clickstream.csv", stringsAsFactors = FALSE)
+
+## Data för klustring
+data_clust_circ <- read.csv2(file = "data_sets/D3 Data/circular.csv")
+data_clust_arbi <- read.csv2(file = "data_sets/D3 Data/arbitrary.csv")
+data_clust_flow <- read.csv2(file = "data_sets/D3 Data/flower.csv")
+
+```
+
+
+
+

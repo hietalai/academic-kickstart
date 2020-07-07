@@ -6,19 +6,20 @@ linktitle: "Visualisering"
 summary:
 date: 2020-07-06T23:44:57+02:00
 lastmod: 2020-07-06T23:44:57+02:00
-draft: true  # Is this a draft? true/false
+draft: false  # Is this a draft? true/false
 toc: true  # Show table of contents? true/false
 type: docs  # Do not modify.
+weight: 2
 
 # Add menu entry to sidebar.
 # - Substitute `example` with the name of your course/documentation folder.
 # - name: Declare this menu item as a parent with ID `name`.
-# - parent: Reference a parent ID if this page is a child
+# - parent: Reference a parent ID if this page is a child.
 # - weight: Position of link in menu.
 menu:
   ndab02:
     name: Visualisering
-    # parent: YourParentID
+    parent: NDAB02
     weight: 1
 ---
 
@@ -48,23 +49,38 @@ För att skapa ett bra diagram behöver man tänka på några olika saker.
 
 Vilken typ av variabel som ska visualiseras påverkar huruvida ett diagram är tydligt eller inte. Samma sorts diagram kan mycket enkelt och tydligt visualisera en kvalitativ variabel men visualiserar kvantitativa variabler värdelöst...
 
-
+<div class="figure" style="text-align: center">
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-1-1.png" alt="Exempel på stapeldiagram för en kvalitativ (t.vä.) och kvantitativ (t.hö.) variabel" width="768" />
+<p class="caption">Figure 1: Exempel på stapeldiagram för en kvalitativ (t.vä.) och kvantitativ (t.hö.) variabel</p>
+</div>
 
 Ritytan innehåller den information som ska förmedlas och bör därför få ta upp majoriteten av platsen i ett diagram. Om man anger för stora rubriker blir det lätt att man inkräktar på ritytan. Detsamma gäller om y-axeln innehåller långa skalvärdesnamn.
 
-
+<div class="figure" style="text-align: center">
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-2-1.png" alt="Exempel på diagram med majoriteten rityta (t.vä.) och för liten rityta (t.hö.)" width="768" />
+<p class="caption">Figure 2: Exempel på diagram med majoriteten rityta (t.vä.) och för liten rityta (t.hö.)</p>
+</div>
 
 Stödlinjer bör finnas för att underlätta utläsningen av information långt från respektive axel. Dessa bör dock inte ta över diagrammet utan enbart finnas i bakgrunden. Notera att stödlinjer kan komma att justera beroende på vilket sammanhang diagrammen används till. Beroende på upplösning, ljusstyrka eller andra skärmegenskaper kan ibland ljusa och smala linjer försvinna in i den vita bakgrunden. Då är tjockare och starkare stödlinjer befogat.
 
-
+<div class="figure" style="text-align: center">
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-3-1.png" alt="Exempel på stödlinjer som ligger i bakgrunden (t.vä.) och stödlinjer som stjäl fokus från informationen (t.hö.)" width="768" />
+<p class="caption">Figure 3: Exempel på stödlinjer som ligger i bakgrunden (t.vä.) och stödlinjer som stjäl fokus från informationen (t.hö.)</p>
+</div>
 
 Ett bra diagram har också läsbar text oavsett storleken på diagrammet. En bra referens kan vara att förhålla den minsta texten i diagrammet till ungefär samma storlek som brödtexten i rapporten eller presentationen. Försök att alltid tänka på att underlätta för läsaren!
 
-
+<div class="figure" style="text-align: center">
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-4-1.png" alt="Exempel på läsbar text (t.vä.) och på gränsen till för liten text (t.hö.)" width="768" />
+<p class="caption">Figure 4: Exempel på läsbar text (t.vä.) och på gränsen till för liten text (t.hö.)</p>
+</div>
 
 Källhänvisning bör finnas i alla diagram där informationen är hämtat från någon annan källa än oss själva. 
 
-
+<div class="figure" style="text-align: center">
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-5-1.png" alt="Exempeldiagram med källhänvisning" width="384" />
+<p class="caption">Figure 5: Exempeldiagram med källhänvisning</p>
+</div>
 
 
 ## Visualisering av beskrivande statistik
@@ -113,12 +129,16 @@ I `ggplot()` anges vilket datamaterial vi vill använda för visualiseringen:
 ggplot(exempeldata)
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
+
 Som vi ser skapas inget utifrån detta kommando, vi har bara sagt åt R att använda datamaterialet men inte vad den ska göra med det. Nästa steg är att ange vilka variabler vi vill använda för axlarna i diagrammet. När det kommer till stapeldiagram finns två olika sätt att göra; antingen har vi rådata och låter R räkna ut frekvensen av de olika kategorierna själv eller så skapar vi en egen frekvenstabell och anger `y = frekvens`. Vi kommer först börja med exemplet utifrån rådata:
 
 
 ```r
 ggplot(exempeldata) + aes(x = bil)
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
 
 Nu ser vi att R ritat ut de olika bilarna som finns i materialet på x-axeln, men vi har fortfarande inte sagt åt R vad vi vill att den ska göra med informationen vi ska visualisera. Den sista grundkomponenten är den som styr vilken diagramtyp vi skapar och i `ggplot2` finns många olika som vi kommer stöta på i denna text. För ett stapeldiagram anger vi `geom_bar()` från engelska termen *bar chart*. 
 
@@ -127,6 +147,8 @@ Nu ser vi att R ritat ut de olika bilarna som finns i materialet på x-axeln, me
 ggplot(exempeldata) + aes(x = bil) + geom_bar()
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" />
+
 För att y-axeln ska visa relativa frekvenser istället för absoluta, kan vi i `geom_bar()` lägga till koden `aes(y = stat(count/sum(count)))`. Diagrammet ändrar sig inte i sin form, staplarna är fortfarande lika höga i relation till varandra, men tolkningar av detta diagram kan nu göras i andelar (procent) istället för antal.
 
 
@@ -134,12 +156,16 @@ För att y-axeln ska visa relativa frekvenser istället för absoluta, kan vi i 
 ggplot(exempeldata) + aes(x = bil) + geom_bar(aes(y = stat(count/sum(count))))
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
+
 Med dessa grundkomponenter får vi fram ett diagram, men vi kan väl alla hålla med om att det i detta läge inte ser särskilt snyggt och tydligt ut. Ett snabbt och enkelt sätt att få till lite snyggare diagram är att använda någon utav `ggplot`s teman som finns tillgängliga genom olika `theme()`. Exempelvis är ett stilrent tema att utgå ifrån `theme_bw()` likt:
 
 
 ```r
 ggplot(exempeldata) + aes(x = bil) + geom_bar(aes(y = stat(count/sum(count)))) + theme_bw()
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
 Det är nu den största funktionaliteten med `ggplot2` kommer in. Vi kan spara instruktionerna vi gett åt R för att skapa diagrammet och senare lägga till fler instruktioner med andra funktioner genom att använda `+` på samma sätt som koderna ovan är skrivna. Vi sparar därför de nuvarande instruktionerna i ett objekt som vi kallar för `p` (vi kan döpa denna till vad som helst) likt:
 
@@ -155,6 +181,8 @@ Nu ligger alla instruktioner för **hur** R ska rita upp diagrammet sparat i `p`
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
+
 Vi kan nu lägga till ytterligare funktioner exempelvis:
 
 
@@ -162,12 +190,16 @@ Vi kan nu lägga till ytterligare funktioner exempelvis:
 p + coord_flip()
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" />
+
 eller:
 
 
 ```r
 p + scale_y_continuous(labels = scales::percent)
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
 
 Notera att diagrammet inte roterades i det andra diagrammet när vi ändrade hur skalvärdena på y-axeln ser ut. Detta är för att vi endast sagt åt R att rita diagrammet med vardera tillagda instruktion vid två olika tillfällen utan att ha sparat de någonstans. För att R ska spara dessa instruktioner tillsammans med grundkomponenterna vi angivit innan måste vi spara ovanstående kod till ett objekt:
 
@@ -178,10 +210,54 @@ p <- p + scale_y_continuous(labels = scales::percent)
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
+
 ##### Sammanställd data 
 Om vi istället för rådata har sammanställd data exempelvis i form utav en frekvenstabell kan vi ändå skapa samma ovanstående diagram. Vi tänker oss att data om bilarna istället för de 64 observationerna är presenterad i följande tabell:
 
-
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Table 1: Fördelning av bilmärken i urvalet</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Märke </th>
+   <th style="text-align:right;"> Frekvens </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Audi </td>
+   <td style="text-align:right;"> 11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ford </td>
+   <td style="text-align:right;"> 9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ingen </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Nissan </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Opel </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Toyota </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Volkswagen </td>
+   <td style="text-align:right;"> 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Volvo </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+</tbody>
+</table>
 
 Det som är viktigt är att vi fortfarande i R hanterar denna frekvenstabell som en `data.frame`, då `ggplot` kräver formatet för sina visualiseringar. Datamaterialet ser då istället ut som:
 
@@ -190,12 +266,24 @@ Det som är viktigt är att vi fortfarande i R hanterar denna frekvenstabell som
 head(exempeltabell)
 ```
 
+```
+##    Märke Frekvens
+## 1   Audi       11
+## 2   Ford        9
+## 3  Ingen        5
+## 4 Nissan       10
+## 5   Opel        4
+## 6 Toyota        5
+```
+
 För att skapa diagrammet som vi sett tidigare måste vi lägga till några argument i `aes()` och `geom_bar()` likt koden nedan. Argumentet `stat = "identity"` i `geom_bar()` krävs för att R ska räkna värdet på den angivna y-variabeln som höjden på stapeln.
 
 
 ```r
 ggplot(exempeltabell) + aes(x = Märke, y = Frekvens) + geom_bar(stat = "identity") + theme_bw()
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
 
 #### Färger 
 Om vi vill ändra färgen på olika delar av diagrammet exempelvis staplarna kan vi göra detta inuti `geom_bar()` med argumenten `color` för kantlinjerna och `fill` för fyllnadsfärgen. För att se vilka färger som går att ange kan man köra funktionen `colors()` för deras namn eller hämta hem följande [PDF](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) som har färgerna utskrivna. Vi kommer senare titta närmare på färger och dess funktion i visualiseringar.
@@ -211,6 +299,8 @@ p <- ggplot(exempeldata) + aes(x = bil) +
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
+
 
 #### Stödlinjer 
 Nu vill vi ändra lite stödlinjer så att de syns och hjälper till att förtydliga informationen vi vill visa. När det kommer till stapeldiagram behövs inte stödlinjer på x-axeln då staplarna sträcker sig hela vägen ner till dess skalvärden. Däremot behöver vi förtydliga skalvärdena på y-axeln. För att ändra utseendet på olika delar i ett diagram används `theme()` och diverse olika argument däri. Titta i dokumentationen för funktionen för att få en inblick i vad som kan ändras i diagrammet. Oftast ska dessa delar anges med en utav `element`-funktioner, beroende på typen som ska ändras. Text ändras med `element_text()`, linjer med `element_line()` och delar kan helt och hållet tas bort genom `element_blank()`. Nedanstående kod ändrar stödlinjerna på y-axelns färg till lite mörkare grå än standardvärdet (`panel.grid.major` för stödlinjerna som följer skalvärdena, `panel.grid.minor` för stödlinjer emellan skalvärdena) och tar bort stödlinjerna från x-axeln.
@@ -225,6 +315,8 @@ p <- p + theme(panel.grid.major.x = element_blank(),
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
+
 #### Text 
 Det som saknas just nu i diagrammet är tydligare (och större) text som förklarar de olika delarna av diagrammet för läsaren. De olika etiketterna kan alla anges i samma funktion genom olika argument likt:
 
@@ -235,12 +327,16 @@ p <- p + labs(x = "Bilmärke", y = "Andel", caption = "Källa: Hietala (2019)")
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
+
 Det vi kan förhålla oss till när vi anger titeln för y-axeln är att den beskriver enheten som används för att mäta axelns skalvärden. Då vi i detta fall har värden mellan `\(0\)` och `\(1\)` bör vi ange *Andel* som titel. Om vi skulle haft absoulta frekvenser skulle en lämplig titel varit *Antal*. Om vi istället för andelar anger skalan i procent likt tidigare diagram kan det diskuteras huruvida det behövs en y-axeltitel eftersom enheten redan är angiven på skalan. Diagrammet skulle då kunna se ut som:
 
 
 ```r
 p + scale_y_continuous(labels = scales::percent) + labs(y = "")
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
 
 Vi kan även ändra andra aspekter av textens **utseende** i diagrammet, exempelvis hur stor den är, dess rotation eller position. Detta görs med olika argument i `theme()`. Vi kan ändra utseendet på axeltexter med `axis.title`, skalvärden med `axis.text` och källhänvisningen med `plot.caption`. Alla dessa delar kräver instruktioner från `element_text()`-funktionen och där kan argument som:
 
@@ -260,6 +356,8 @@ p <- p + theme(plot.caption = element_text(face = "italic"),
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" />
+
 #### Skalvärden 
 Ibland kan de automatiskt genererade axelskalorna medföra svårigheter att utläsa informationen som vi ska presentera. Därför är det sista vi kommer titta på funktioner för att ändra dessa skalor. Vilken funktion vi vill använda och hur man kan ändra utseendet påverkas av vilken sorts variabel som anges på den specifika axeln. Exempelvis kanske vi vill i diagrammet ändra så att den **kontinuerliga** y-axeln endast visar skalvärden var 10:e procent istället för var 5:e som nu sker. Detta gör vi då via:
 
@@ -267,6 +365,8 @@ Ibland kan de automatiskt genererade axelskalorna medföra svårigheter att utl�
 ```r
 p + scale_y_continuous(breaks = seq(from = 0, to = 1, by = .10))
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
 
 Argumentet `breaks = seq(from = 0, to = 1, by = .10)` anger att vi vill att värden (breaks) ska visas på specifika ställen på axeln. `seq()`-funktionen är ett snabbare sätt att skapa en vektor med lika steglängd mellan värden som vi använder för att skapa `c(0, 0.1, 0.2, 0.3, ..., 1)`. Notera att trots att vi anger värden som går hela vägen upp till 1, kommer inte diagrammet visa detta. 
 
@@ -278,6 +378,8 @@ p + scale_y_continuous(breaks = seq(from = 0, to = 1, by = .10),
                        limits = c(0, 0.35))
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" />
+
 Något som dock är snyggt att göra med specifikt stapeldiagram är att ta bort den lilla yta som finns under alla staplar och låta y-axeln möta x-axeln vid `y = 0`. Detta kan vi göra med argumentet `expand = c(0,0)`, men då **måste** vi ange gränserna på skalan. 
 
 
@@ -287,6 +389,8 @@ p <- p + scale_y_continuous(breaks = seq(from = 0, to = 1, by = .10),
                             expand = c(0,0))
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Grupperat stapeldiagram 
 Om vi har ett datamaterial bestående av flera kvalitativa variabler kan vi ibland vilja visualisera fördelningen av en variabel **grupperat** på en annan, exempelvis "Hur ser fördelningen av bilmärken ut, uppdelat på civilstånd?". Det kanske finns några intressanta relationer mellan dessa två variabler som vi skulle vilja undersöka vidare, men som tidigare sagt är visualisering alltid det första steget för att lära känna sitt datamaterial.
@@ -304,6 +408,8 @@ p <- ggplot(exempeldata) +
 
 p 
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
 
 För relativa frekvenser i ett grupperat stapeldiagram kan vi summera de visualiserade staplarna på två olika sätt. 
 
@@ -327,7 +433,10 @@ ggplot(exempeldata) + aes(x = civilstand, fill = bil) +
   theme_bw()
 ```
 
-
+<div class="figure" style="text-align: center">
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-33-1.png" alt="Grupperat stapeldiagram med enkel summering (t.vä.) och gruppvis summering (t.hö.) till 100 procent" width="768" />
+<p class="caption">Figure 6: Grupperat stapeldiagram med enkel summering (t.vä.) och gruppvis summering (t.hö.) till 100 procent</p>
+</div>
 
 Tolkningarna på vardera av dessa diagram skiljer sig åt och valet styrs av vilken sorts frågeställning som vi vill besvara med visualiseringen. En jämförelse av gruppernas fördelning skulle bli tydlig med en gruppvis summering, medan presentation av fördelningen i materialet kan visualiseras med den enkla summeringen.
 
@@ -361,6 +470,8 @@ p <- ggplot(exempeldata) +
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
+
 #### Färger
 Det som också urskiljer ett grupperat stapeldiagram med det skapades tidigare är att vi nu har en legend till höger av diagramytan som innehåller ytterligare information som krävs för att läsa av diagrammet. Vi har fått olika färger på den valda fördelningsvariabeln som kopplas samman till de olika kategorierna. Dessa vill vi nu ändra tillsammans med att ändra lite information i legenden för att göra den tydligare.
 
@@ -376,6 +487,8 @@ p <- p + scale_fill_manual(name = "Bilmärke",
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Histogram 
 Om variabeln istället är kvantitativ och vi vill presentera fördelningen av denna variabel, är histogram (eller lådagram) lämpligt att använda.
@@ -397,6 +510,8 @@ p <- p + geom_histogram(fill = "orange",
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
 
 Vi kan också snygga till diagrammet med alla funktioner som vi tidigare använt för stapeldiagram.
 
@@ -423,6 +538,8 @@ p <- p + scale_y_continuous(expand = c(0,0), limits = c(0, 20)) +
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
+
 ### Lådagram 
 Ett alternativ att presentera fördelningen för en kvantitativ variabel är lådagram. Denna visualiseringstyp lämpar sig bättre om det finns extremvärden i materialet då diagrammet utgår ifrån kvartiler.
 
@@ -438,6 +555,8 @@ p <- ggplot(exempeldata) + aes(x = factor(0), y = alder) +
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" />
 
 Snyggar till diagrammet som tidigare.
 
@@ -463,6 +582,8 @@ p <- p + theme_bw() + theme(axis.title.y =
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
+
 ## Samband mellan variabler
 
 
@@ -479,6 +600,8 @@ p <- ggplot(exempeldata) + aes(x = alder, y = lon) + geom_point()
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
 
 Som vanligt lägger vi till lite extra kod för att ändra utseendet av diagrammet. När det kommer till stödlinjer och spridningsdiagram är syftet med diagrammet att se helheten, det generella sambandet mellan variablerna, mer än specifika värden för enstaka observationer. Detta betyder att stödlinjerna riskerar att ta för mycket fokus från diagrammet istället för att tillföra tydlighet. En lösning på detta är att försvaga styrkan på linjerna eller helt ta bort dem. 
 
@@ -509,12 +632,20 @@ p <-
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-43-1.png" width="576" style="display: block; margin: auto;" />
+
 Då vi pratar om samband är det naturligt att gå vidare till en statistisk metod som kallas för regression som mer i detalj beskriver sambandet mellan variabler. Vi kommer inte gå igenom det så mycket i denna kurs men vi kan fortfarande visualisera den skattade regressionslinje som fås med hjälp av en metod som kallas minsta kvadrat skattning. I R lägger vi till ett till `geom`-objekt till samma diagram. `method = lm` anger att vi vill skatta en linjär modell (**l**inear **m**odel) och `se = FALSE` anger att vi inte vill visa s.k. konfidensband. 
 
 
 ```r
 p + geom_smooth(method = lm, se = FALSE)
 ```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" />
 
 #### Visualisering av olika datamaterial i samma diagram
 
@@ -534,6 +665,12 @@ p <-
 p 
 ```
 
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" />
+
 För att lägga till den nya regressionslinjen utan extremvärden anges i `geom_smooth()` ett nytt `data`-objekt. Linjen kommer då ritas med samma variabler som angivits innan men utgå från detta materials värden, som saknar de extremvärden som man kan urskilja i materialet.
 
 
@@ -545,6 +682,13 @@ p <-
                   se = FALSE)
 p
 ```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" />
 
 Legenden kan behöva förtydligas lite och här får vi återigen användning av de gruppnamn som angetts tidigare i koden. Argumentet `name` ger en bättre titel på legenden och i `values` kan vi i vektorn säga specifikt vilka grupper som vi vill ha vissa färger likt `"gruppnamn" = "färg"`. Vi vill också ange bättre etiketter på dessa grupper och detta görs med `labels`-argumentet.
 
@@ -560,6 +704,13 @@ p <-
 p
 ```
 
+```
+## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" />
+
 #### Extra visualisering
 Det kanske också kan vara intressant att peka ut vilka observationer som plockas bort vilket kan göras genom att skapa ytterligare ett datamaterial med **enbart** de valda extremvärdena. Vi kan då lägga till ett till `geom_point()` till diagrammet där vi ändrar `shape` till någon annan symbol som tydliggör att dessa har plockats bort.
 
@@ -570,6 +721,13 @@ p + geom_point(data = exempeldata_extrem_points,
                size = 4)
 ```
 
+```
+## `geom_smooth()` using formula 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-49-1.png" width="576" style="display: block; margin: auto;" />
+
 ### Linjediagram 
 
 
@@ -578,7 +736,43 @@ För att vi ska kunna skapa ett linjediagram över flera serier behöver vi impo
 
 Datamaterialet bör alltså se ut som följer:
 
-
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Table 2: Första observationerna i datamaterialet med en grupperingsvariabel Region</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> År </th>
+   <th style="text-align:left;"> Region </th>
+   <th style="text-align:right;"> Antal </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1975 </td>
+   <td style="text-align:left;"> Hela landet </td>
+   <td style="text-align:right;"> 331 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1976 </td>
+   <td style="text-align:left;"> Hela landet </td>
+   <td style="text-align:right;"> 332 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1977 </td>
+   <td style="text-align:left;"> Hela landet </td>
+   <td style="text-align:right;"> 371 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1978 </td>
+   <td style="text-align:left;"> Hela landet </td>
+   <td style="text-align:right;"> 364 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1979 </td>
+   <td style="text-align:left;"> Hela landet </td>
+   <td style="text-align:right;"> 364 </td>
+  </tr>
+</tbody>
+</table>
 
 När materialet nu innehåller tre variabler (en som visar tid, en som visar vilken grupp värden och år tillhör, samt mätvärdet för den angivna gruppen och året) kan vi påbörja visualiseringen.
 
@@ -609,6 +803,8 @@ p <-
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" />
 
 Som tidigare ändrar vi det visuella och lägger till ytterligare förtydligande texter med liknande koder som innan. Till linjediagram vill vi ofta kunna se både lod- och vågräta avstånd vilket innebär att stödlinjer bör finnas åt båda hållen. Det kan dock vara av intresse att använda och ändra på `panel.grid.minor`-linjerna till en svagare färg för att göra skillnad på de olika stödlinjerna. I exemplet nedan används en mörkare grå färg för `panel.grid.major`.
 
@@ -642,6 +838,8 @@ p <-
 p 
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-54-1.png" width="576" style="display: block; margin: auto;" />
+
 #### Flera tidsserier
 
 För att visualisera flera tidsserier i ett diagram kräver `ggplot2` att datamaterialet ska vara formaterad med en grupperingsvariabel. För att R ska göra skillnad på dessa olika grupper måste `group` och/eller `color` argumentet i `aes` innehålla den grupperingsvariabel som finns i data.
@@ -658,6 +856,8 @@ p <- ggplot(tidsserie_exempel) +
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-55-1.png" width="576" style="display: block; margin: auto;" />
 
 Som tidigare kan vi nu ändra om flera aspekter av diagrammet men nu måste vi också ändra den legend som skapas från grupperna i `aes()`. När vi nu vill ändra linjefärger är det funktionen `scale_color_manual()` som ska användas, specifikt argumentet `values`. 
 
@@ -695,6 +895,8 @@ p <-
 p 
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-56-1.png" width="576" style="display: block; margin: auto;" />
+
 
 ### Punktdiagramsmatris
 
@@ -708,7 +910,7 @@ require(GGally)
 Datamaterialet som används till detta exempel är ett utav de inbyggda materialen som finns i R, nämligen `iris`. Det innehåller fyra stycken kontinuerliga variabler som beskriver olika mått på blommor och ytterligare en kategorisk variabel som anger vilken art observationen tillhör. Datamaterialet ser ut som följer:
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>Table 1: Första observationerna i Iris-data</caption>
+<caption>Table 3: Första observationerna i Iris-data</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> Sepal.Length </th>
@@ -785,6 +987,8 @@ p <- ggpairs(data = iris,
 p
 ```
 
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-58-1.png" width="576" style="display: block; margin: auto;" />
+
 Som tur är finns det möjlighet att ändra vissa delar av diagrammet för att förtydliga vissa delar.
 
 
@@ -794,6 +998,8 @@ p <- p + theme_bw() +
 
 p
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-59-1.png" width="576" style="display: block; margin: auto;" />
 
 #### Färgläggning av observationer beroende på klass
 Det kan finnas tillfällen där samband mellan variabler ser olika ut beroende på en kategorisk variabel som inkluderas i datamaterialet. Detta *kan* också inkluderas i dessa diagram, men risken är att det blir för mycket information som trycks ihop på en för liten yta. Tyvärr finns inte ett enkelt sätt att ändra dessa färger eller skapa en legend som tydligt beskriver vilken färg som hör till vilken kategori...
@@ -812,6 +1018,8 @@ ggpairs(data = iris,
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
 ```
+
+<img src="/teaching/ndab02/1-visualisering_files/figure-html/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" />
 
 
 

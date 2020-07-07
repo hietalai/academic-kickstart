@@ -29,9 +29,31 @@
   weight = 60
 
 [[teaching]]
+  name = "Svenska"
+  url = ""
+  weight = 1
+
+[[teaching]]
+  name = "English"
+  url = ""
+  weight = 10
+
+[[teaching]]
   name = "NDAB02"
-  post = "<span class='alert'>New!</span>"
+  parent = "Svenska"
   url = "ndab02/"
+
+[[teaching]]
+  name = "732G12"
+  parent = "Svenska"
+  url = "732G12/"
+
+[[teaching]]
+  name = "732G81"
+  parent = "English"
+  url = "732G81/"
+
+
 
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
