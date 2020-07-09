@@ -11,6 +11,12 @@ toc: true  # Show table of contents? true/false
 type: docs  # Do not modify.
 weight: 4
 
+tags:
+- Statistics
+- Swedish
+- Statistical inference
+- R
+
 # Add menu entry to sidebar.
 # - Substitute `example` with the name of your course/documentation folder.
 # - name: Declare this menu item as a parent with ID `name`.
@@ -474,19 +480,15 @@ Exempelvis kan data se ut som följer:
    <td style="text-align:left;"> A </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:left;"> B </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 17 </td>
-   <td style="text-align:left;"> B </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> A </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 7 </td>
    <td style="text-align:left;"> B </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 7 </td>
    <td style="text-align:left;"> C </td>
   </tr>
   <tr>
@@ -494,20 +496,24 @@ Exempelvis kan data se ut som följer:
    <td style="text-align:left;"> C </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> E </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> C </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> D </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 3 </td>
    <td style="text-align:left;"> E </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 15 </td>
-   <td style="text-align:left;"> F </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> E </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 24 </td>
-   <td style="text-align:left;"> F </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> E </td>
   </tr>
 </tbody>
 </table>

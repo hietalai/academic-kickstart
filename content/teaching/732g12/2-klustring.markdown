@@ -11,6 +11,12 @@ draft: false  # Is this a draft? true/false
 toc: true  # Show table of contents? true/false
 type: docs  # Do not modify.
 
+tags:
+- Machine Learning
+- Swedish
+- Clustering
+- R
+
 output: 
   language:
     label:

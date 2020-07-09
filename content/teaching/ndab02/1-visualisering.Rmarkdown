@@ -11,6 +11,12 @@ toc: true  # Show table of contents? true/false
 type: docs  # Do not modify.
 weight: 2
 
+tags:
+- Statistics
+- Swedish
+- Visualization
+- R
+
 # Add menu entry to sidebar.
 # - Substitute `example` with the name of your course/documentation folder.
 # - name: Declare this menu item as a parent with ID `name`.

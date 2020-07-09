@@ -27,10 +27,22 @@ subtitle = ""
   description = "100%"  
   
 [[feature]]
-  icon = "camera-retro"
+  icon = "music"
   icon_pack = "fas"
-  name = "Photography"
-  description = "10%"
+  name = "Music"
+  description = "40%"
+  
+[[feature]]
+  icon = "dice-d20"
+  icon_pack = "fas"
+  name = "Board games"
+  description = "40%"
+  
+[[feature]]
+  icon = "gamepad"
+  icon_pack = "fas"
+  name = "Video games"
+  description = "80%"
 
 # Uncomment to use emoji icons.
 # [[feature]]

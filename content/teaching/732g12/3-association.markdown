@@ -34,28 +34,15 @@ menu:
     weight: 4
 ---
 
-```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, eval = FALSE, fig.pos = 'H', fig.width = 7, fig.height = 4)
-
-source("packages_732g12.r")
-
-set.seed(20200707)
-
-## Data för associationsanalys
-data_assoc <- read.csv2(file = "data_sets/D2 Data/marbas.csv")
-
-## Data för sekvensanalys
-data_seq <- read.csv2(file = "data_sets/D2 Data/clickstream.csv", stringsAsFactors = FALSE)
-
-```
 
 Det finns flertalet källor som samlar in data för andra ändamål än analys såsom olika register, kundkort vid företag, osv. Dessa datamängder brukar ofta vara väldigt stora och innehålla mycket information som är omöjlig för en vanlig människa att gå igenom. Algoritmer som kan söka ut samband och relationer bland dessa register eller transaktioner kan då vara till hjälp.
 
 ## Associationsanalys
 För att kunna genomföra associationsanalys med `arules`-paketet måste datamaterialet vara av klasstyp `transactions`. Nedan är ett **förslag** på hur en `data.frame` kan konverteras till `transactions` men fler varianter finns att hitta i klassens dokumentation.
 
-```{r association_apriori}
+
+```r
 #### Associationsanalys ####
 ## Konverterar data.frame till transactions-typ som arules kräver. 
 trans <- as(split(data_assoc[,"PRODUCT"], data_assoc[,"TRANS_ID"]), "transactions")
@@ -75,7 +62,6 @@ rules <- apriori(data = trans,
                    # Definierar största antalet enheter i sökta enhetsmängder
                    maxlen = 5)
                  ) 
-
 ```
 
 Resultatet från `apriori()` skapas ett objekt av typen `rules` som hanteras lite annorlunda gentemot vad vi kanske är vana vid. För det första används `@` till skillnad från `$` för att plocka ut enskilda delar av objektet och likt `transactions` behöver vi använda funktionen `inspect()` för att kunna se mycket av informationen som finns i dessa delar.
@@ -84,7 +70,8 @@ Resultatet från `apriori()` skapas ett objekt av typen `rules` som hanteras lit
 
 `as()` kan också användas på detta objekt för att konvertera tillbaka resultatet till en `data.frame` för enklare utforskning och eventuell presentation av tabeller.
 
-```{r association_subset}
+
+```r
 ## subset-funktionen är väldigt användbar för att vidare plocka ut intressanta regler
 inspect(
   subset(
@@ -103,7 +90,6 @@ inspect(head(sort(rules, by = "confidence", decreasing = FALSE), n = 5))
 rules_dat <- as(rules, "data.frame")
 
 head(rules_dat, n = 5)
-
 ```
 
 ## Sekvensanalys
@@ -121,8 +107,8 @@ För att konvertera ett datamaterial från rådata-format till det `sequence`-fo
 
 Vi läser in det bearbetade (och exporterade) materialet från en text-fil med hjälp av `read_baskets()`, men det ska gå att använda `as()` likt konverteringen som gjordes vid associationsanalysen. Dock medför detta **ofta** felmeddelanden som inte alltid går att lösa ut... Rekommenderar att ni läser igenom dokumentationen för `sequences`-klassen för ytterligare exempel på hur man kan läsa in data.
 
-```{r sequence_data_process}
 
+```r
 #### Sekvensanalys ####
 ## För att få till data på rätt sätt måste viss bearbetning av data genomföras
 data_seq_reduced <- data_seq[, c("COOKIE", "Click_order", "Webpage")]
@@ -155,7 +141,6 @@ sequences <- read_baskets("temp.txt", sep = " ",
 inspect(head(sequences, n = 5))
 
 save(sequences, file = "sequences.RData")
-
 ```
 
 ### cSPADE
@@ -164,7 +149,8 @@ cSPADE (`cspade()`) kan endast köras i vanliga `Rgui.exe` inte i RStudio. Jag h
 
 Nedan följer ett exempel på `cspade()` och dess argument.
 
-```{r cspade}
+
+```r
 ## parameter kan användast för att ange tidsbegränsingar och supporttröskeln
 frequent_sequences <- 
   cspade(
@@ -189,13 +175,12 @@ frequent_sequences <-
       verbose = TRUE, 
       tidLists = TRUE)
     )
-
 ```
 
 Resultatet från `cspade()` skapas ett objekt av typen `sequences` som återigen ser lite annorlunda ut än vad vi är vana vid. Likt `rules`  används `@` till skillnad från `$` för att plocka ut enskilda delar av objektet. `summary()` ger oss sammanfattande information om enskilda händelser och lite beskrivande statistik över alla sekvenser.
 
-```{r sequence_summary}
 
+```r
 ## Laddar en data-fil innehållande de frekventa sekvenserna från cspade()
 load("frequent_sequences.RData")
 
@@ -204,7 +189,6 @@ summary(frequent_sequences)
 
 ## Konverterar objektet till en data.frame 
 as(frequent_sequences, "data.frame")
-
 ```
 
 För att plocka ut vissa specifika sekvenser finns även här en specifik version av `subset()` från `arulesSequences`-paketet. Likt tidigare behöver vi ange dels objektet innehållande alla sekvenser vi vill plocka ut, och det logiska argument som styr vilka sekvenser vi är intresserad av. Här kan vi ange argument som:
@@ -215,8 +199,8 @@ För att plocka ut vissa specifika sekvenser finns även här en specifik versio
 
 För att veta vad de olika händelserna heter för att kunna plocka ut de, rekommenderas att titta på `most frequent items:` ur `summary()`.
 
-```{r sequence_subset}
 
+```r
 ## Plockar ut sekvenserna som innehåller 2 händelser och specifikt händelsen "product"
 inspect(
   subset(
@@ -226,5 +210,4 @@ inspect(
     subset = size(x) == 2 & x %in% "\"product\""
     )
   )
-
 ```

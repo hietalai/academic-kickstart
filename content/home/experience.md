@@ -18,27 +18,36 @@ date_format = "Jan 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
-  title = "CEO"
-  company = "GenCoin"
+  title = "Study counselor"
+  company = "Linköping University"
   company_url = ""
-  location = "California"
-  date_start = "2017-01-01"
+  location = "Linköping, Sweden"
+  date_start = "2016-07-01"
   date_end = ""
   description = """
-  Responsibilities include:
-  
-  * Analysing
-  * Modelling
-  * Deploying
+  Part-time employment of 40 percent.
+  Responsibilities include counseling students at the master's and bachelor program in statistics with study planning, administration regarding admission and procession in the programs as well as helping the program directors improving their respective curriculum.
   """
 
 [[experience]]
-  title = "Professor"
-  company = "University X"
+  title = "Lecturer"
+  company = "Linköping University"
   company_url = ""
-  location = "California"
-  date_start = "2016-01-01"
-  date_end = "2016-12-31"
-  description = """Taught electronic engineering and researched semiconductor physics."""
+  location = "Linköping, Sweden"
+  date_start = "2015-07-01"
+  date_end = ""
+  description = """
+  Part-time employment of 60 percent.
+  Course director and examiner for courses in statistics and machine learning for undergraduates in statistics, biology and economics. Supervisor for a couple bachelor thesises."""
+  
+[[experience]]
+  title = "Amanuensis / Teaching assistant"
+  company = "Linköping University"
+  company_url = ""
+  location = "Linköping, Sweden"
+  date_start = "2010-08-01"
+  date_end = "2015-05-30"
+  description = """
+  Various employments as teaching assistant for courses in statistics and machine learning."""
 
 +++
