@@ -22,17 +22,27 @@ history <- read_xlsx("F:/OneDrive/OneDrive - Linköpings universitet/Jobb/LiU/Ar
 
 My career in teaching started while studying the Bachelor program *Statistik och dataanalys* at Linköping University as a teaching assistant. After graduating the Master's program *Statistics and Data Mining* in 2015 I started working at Linköping University as a lecturer (universitetsadjunkt) full-time. 
 
-## Current courses
+## Course materials
+I have created online tutorials/course materials for many of my courses, usually implemented in R. These can be found in the menu of this page. 
 
+## Current courses
 ```{r}
 
 current_semester <- "HT"
 current_year <- "2020"
 
+```
+
+These are the courses I am teaching during the `r if(current_semester == "HT") " fall " else " spring "` semester of `r current_year`.
+
+
+```{r}
+
 current <- history %>% 
   filter(År == current_year, Termin == current_semester) %>%
   select(Kursnamn, Kurskod, "Antal hp") %>%
-  rename("Course Name" = Kursnamn, "Course Code" = Kurskod, "Credits" = "Antal hp")
+  rename("Course Name" = Kursnamn, "Course Code" = Kurskod, "Credits" = "Antal hp") %>%
+  arrange(`Course Code`)
 
 kable(current, format = "html", align = "l", escape = FALSE) %>%
   kable_styling(font_size = 14, 
@@ -44,13 +54,16 @@ kable(current, format = "html", align = "l", escape = FALSE) %>%
 
 ## Past courses
 
+These are the courses I have taught during my time at Linköping University.
+
 ```{r}
 
 past <- history %>% 
   filter(År != current_year | Termin != current_semester) %>%
   select(Kursnamn, Kurskod, "Antal hp") %>%
+  rename("Course Name" = Kursnamn, "Course Code" = Kurskod, "Credits" = "Antal hp") %>%
   distinct() %>%
-  arrange(Kurskod)
+  arrange(`Course Code`)
 
 kable(past, format = "html", align = "l") %>%
   kable_styling(font_size = 14, 

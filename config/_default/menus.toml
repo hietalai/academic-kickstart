@@ -18,6 +18,11 @@
   url = "#projects"
   weight = 30
 
+#[[main]]
+#  name = "Slides"
+#  url = "slides/"
+#  weight = 40
+
 [[teaching]]
   name = "NDAB02 (SE)"
   parent = "Course Materials"

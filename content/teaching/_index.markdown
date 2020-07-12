@@ -12,7 +12,14 @@ type = "docs"  # Do not modify.
 
 My career in teaching started while studying the Bachelor program *Statistik och dataanalys* at Linköping University as a teaching assistant. After graduating the Master's program *Statistics and Data Mining* in 2015 I started working at Linköping University as a lecturer (universitetsadjunkt) full-time. 
 
+## Course materials
+I have created online tutorials/course materials for many of my courses, usually implemented in R. These can be found in the menu of this page. 
+
 ## Current courses
+
+
+These are the courses I am teaching during the  fall  semester of 2020.
+
 
 <table class="table" style="font-size: 14px; width: auto !important; ">
  <thead>
@@ -39,12 +46,14 @@ My career in teaching started while studying the Bachelor program *Statistik och
 
 ## Past courses
 
+These are the courses I have taught during my time at Linköping University.
+
 <table class="table" style="font-size: 14px; width: auto !important; ">
  <thead>
   <tr>
-   <th style="text-align:left;"> Kursnamn </th>
-   <th style="text-align:left;"> Kurskod </th>
-   <th style="text-align:left;"> Antal hp </th>
+   <th style="text-align:left;"> Course Name </th>
+   <th style="text-align:left;"> Course Code </th>
+   <th style="text-align:left;"> Credits </th>
   </tr>
  </thead>
 <tbody>
