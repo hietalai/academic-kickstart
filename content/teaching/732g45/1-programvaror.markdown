@@ -1,0 +1,135 @@
+---
+# Course title, summary, and position.
+weight: 2
+
+# Page metadata.
+title: Programvaror
+linktitle: Programvaror
+date: "2020-08-05"
+lastmod: "2020-08-05"
+draft: false  # Is this a draft? true/false
+toc: true  # Show table of contents? true/false
+type: docs  # Do not modify.
+
+tags:
+- Software
+- Swedish
+- Programming
+- R
+- SAS
+- SPSS
+
+output: 
+  language:
+    label:
+      fig: "Figur "
+      tab: "Tabell "
+
+# Add menu entry to sidebar.
+# - name: Declare this menu item as a parent with ID `name`.
+# - weight: Position of link in menu.
+menu:
+  732G45:
+    name: Programvaror
+    parent: 732G45
+    weight: 2
+---
+
+
+I resten av denna text kommer exempel visas i tre olika programvaror. Här följer en kortare presentation av dessa.
+
+## R och RStudio
+R är ett programmeringsspråk som används väldigt frekvent inom statistikområdet. Det gränssnitt som oftast används för att "prata" med språket är RStudio.
+
+I det nedre högra fönstret kan du välja att antingen navigera runt bland mapparna på datorn, titta på utskrivna diagram, hitta olika paket som kan installeras samt använda hjälpfunktionen. Det smidigaste sättet att få hjälp med en viss funktion är att skriva till exempel `?geom_bar` och sedan trycka på Enter-tangenten i *Console*-fönstret, så kommer hjälpdokumentation till funktionen `geom_bar()` upp i nedre högra fönstret. 
+
+I samma fönster kan du även definiera för RStudio i vilken mapp du har de filer som kommer användas. Notera att de filer du importerar samt de koder du sparar måste vara i denna mapp, samt att sökvägen till mappen inte får innehålla bokstäverna Å, Ä eller Ö. Bestäm sökvägen genom att att använda `setwd()`. Förslagsvis skapar du en ny mapp med lämpligt namn på din hemkatalog som du har dina filer i.
+
+För att öppna ett textdokument där du kan skriva kod **som sedan sparas som en separat fil** går du menyvägen `File -> New File -> R Script`. Du kan även öppna en ny flik i detta fönster där annan kod kan skrivas, genom att gå till samma menyväg igen.
+
+#### Grundläggande programmering i R
+Det första som du bör göra när du startar en ny session i R, och har öppnat ett nytt R Script, är att ange en s.k. *arbetsmapp*. Detta är en mapp på datorn som innehåller de filer som du vill arbeta med under sessionen. Fördelen med att lägga alla filer i en och samma mapp och ange en arbetsmapp i R är att du undviker att ange långa sökvägar till filerna om du vill importera dessa till R. 
+
+För att hitta sökvägen till mappen på din dator som du sparat ner alla dina filer, behöver du öppna upp mappen i ditt operativssystems filhanterare och följa någon av följande instruktioner [instruktioner för Windows](https://www.top-password.com/blog/tag/how-to-find-file-path-windows-10/) / [instruktioner för Mac](http://osxdaily.com/2013/06/19/copy-file-folder-path-mac-os-x/). Kopiera denna sökväg och använd sedan funktionen `setwd()` för att R ska riktas mot rätt mapp på datorn. **Notera att alla `\` måste bytas ut med antingen `\\` eller `/` för att R ska kunna läsa av sökvägen korrekt.**
+
+
+```r
+## Anger en arbetsmapp på datorn med alla filer som ska användas 
+setwd("C:/Users/namn/mapp")
+```
+
+R använder sig utav s.k. *paket* med redan skapade funktioner som du kan använda dig utav för att förenkla din programmering. För att dessa funktioner ska kunna användas i din session måste du säga till R att paketet ska laddas upp i sessionen. Du kan tänka det som att du vid din arbetsbänk plockar fram en verktygslåda innehållande de verktyg som du kommer vilja använda under ditt arbete. Om du inte har verktygslådan bredvid dig kommer det bli svårt att använda något av verktygen. Laddningen av paketen kan göras med antingen funktionen `library()` eller `require()`. 
+
+Om du har en ny installation av R på datorn måste du först installera paketen på datorn (ladda ner alla filer som behövs från internet). Det är inte svårare än att använda funktionen `install.packages()` med paketets namn inuti `""` (citattecken) enligt koden nedan. **Detta behöver endast göras en gång för nya installationer av R!**
+
+
+```r
+## Om paketen inte finns på datorn måste de installeras. KÖRS ENDAST EN GÅNG!
+install.packages("ggplot2")
+install.packages("RColorBrewer")
+
+## Laddar paketen innehållande de funktioner som vi vill använda
+require(ggplot2)
+require(RColorBrewer)
+```
+
+Termen *funktion* har använts frekvent tidigare i texten och kan behöva förtydligas. En funktion är strukturerad på följande sätt:
+
+`funktionens_namn(argument_1 = värde, argument_2 = värde)`
+
+Argumentens värden anges med `=` (lika-med) till skillnad från "vanlig" kodning där `<-` anges. En funktions information börjar med en `(` (startparentes) och slutar men en `)` (slutparentes). Detta betyder att man kan skriva en funktion på både en eller flera rader. Notera att R dock måste ha någon form utav indikation att funktionen fortsätter, t.ex. ett `,` (kommatecken) för att ange att flera argument tillkommer eller ett `+` (plustecken) för att koppla ihop flera funktioner, likt som kommer presenteras för `ggplot2`-paketet.
+
+R använder sig av s.k. *variabler* som sedan kan användas för vidare analys. Ett exempel visas i koden nedan, där variabler skapas, tilldelas värden och sedan används för vidare beräkningar:
+
+
+```r
+## Siffror anges bara som de är
+valfritt_nummer <- 3
+
+## För att man ska ange text måste de omfattas av " " för att R ska läsa de som text
+valfri_text <- "Hello world!"
+
+## En vektor med värden
+A <- c(3, 5, 3, 7)
+
+B <- c(1, 3, 2, 4)
+
+## En matris med värden
+A_2 <- matrix(A, nrow = 2)
+
+## Matematiska beräkningar kan sedan utföras med tidigare skapade variabler.
+C <- A + B
+
+D <- A * B
+
+procent <- D / sum(D) * 100
+
+## En vektor med textstränger
+ord <- c("Apelsin", "Banan", "Citron")
+```
+
+#### Ladda in material
+För att kunna arbeta med datamaterial som du samlat in från någon annanstans används någon av `read.()`-funktionerna. Det vanligaste sättet att göra det är genom att skapa en kommaseparerad fil (*.csv*) via exempelvis Excel och sedan importera den till R via `read.csv2()`. **Se till att kolumn- och decimalseparatorn anges enligt det format som filen har med argumenten `sep = symbol`, och `dec = symbol` i funktionen.** Ett tips är att öppna *.csv*-filen i **Notepad++** eller annan enkel ordbehandlare för att se vilka symboler som används.
+
+
+```r
+## Laddar in datamaterial
+bil <- read.csv2("D1bil.csv", dec = ".")
+elev <- read.csv2("D1elev.csv", dec = ".")
+```
+
+## SAS Enterprise Guide
+SAS Enterprise Guide (förkortat SAS EG) är det grafiska gränssnitt som öppnar upp användandet av majoriteten av kraftfulla funktioner som programvaran SAS erbjuder för lättare användning. Användaren behöver inte kunna programmera utan kan förlita sig på det point-and-click system som finns till hands med översiktliga flödescheman för arbetsprocesser och möjligheten att skapa automatiserade rapporter.
+
+#### Komma igång med ett projekt
+När du startat programmet måste du starta ett nytt projekt via `New Project` i välkomstrutan. För att importera filer för vidare analys klickar du på `File -> Import Data`. När du sökt dig fram till den fil som du vill importera kan en del val göras för att hjälpa SAS EG veta vilken sorts variabler som filen har. SAS är generellt bra på att läsa av detta automatiskt men det kan alltid vara bra att kontrollera detta innan du klickar på `Finish`.
+
+För att du ska ha möjlighet att redigera de diagram som du kommer skapa **måste** du vid varje nytt projekt (och ibland när du startar om programmet) klicka dig fram till `Tools -> Options -> Results` och bocka bort `SAS Report` till förmån för `HTML`.
+
+## SPSS
+Förkortningen SPSS stod tidigare för Statistical Package for the Social Sciences, men trots detta namn används programvaran nu frekvent även inom andra områden, framförallt hälsovården.
+
+#### Komma igång med ett projekt
+När SPSS öppnas så kommer det direkt upp en dialogruta. Dubbelklicka på `Open another file…` i den övre rutan och öppna den fil som du ska arbeta med. Därefter öppnas två fönster: `Viewer` och `Data Editor`. Det senare fönstret liknar mycket ett arbetsblad från Excel men har olika olika flikar som visar antingen observationerna eller en översikt över variablerna som materialet innehållet. I `Variable View` kan du ändra vilken typ och skala som variablerna har ifall importeringen av datamaterialet inte blivit korrekt. 
+
+För att skapa diagram, klickar du på menyn `Graphs` och välj `Chart Builder…`. I dialogrutan som öppnas väljs diagramtyp (dubbelklicka på bilderna) och därefter kommer det upp en ruta där inställningar för diagrammet görs. När diagrammet är färdigt dyker det upp i `Viewer` där du kommer behöva redigera diagrammet ytterligare genom att dubbelklicka på det. **Vid kopiering till en rapport, bör du kopiera från `Viewer`!**

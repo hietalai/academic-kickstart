@@ -1,0 +1,125 @@
+---
+# Course title, summary, and position.
+weight: 3
+
+# Page metadata.
+title: Grundläggande visualisering
+linktitle: Grundläggande visualisering
+date: "2020-08-05"
+lastmod: "2020-08-05"
+draft: false  # Is this a draft? true/false
+toc: true  # Show table of contents? true/false
+type: docs  # Do not modify.
+
+tags:
+- Swedish
+- Programming
+- R
+- Visualization
+
+output: 
+  language:
+    label:
+      fig: "Figur "
+      tab: "Tabell "
+
+# Add menu entry to sidebar.
+# - name: Declare this menu item as a parent with ID `name`.
+# - weight: Position of link in menu.
+menu:
+  732G45:
+    name: Grundläggande visualisering
+    parent: 732G45
+    weight: 3
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, eval = TRUE, fig.pos = 'H', fig.height = 2, fig.align = "center", fig.width = 6)
+
+source("packages_732g45.r")
+
+```
+
+## Grundläggande begrepp
+Ett diagram innehåller olika delar som kommer refereras i resterande text. Här följer en kortare ordlista:
+
+- **Diagramyta**: Det område som innehåller all information tillhörande en visualisering
+- **Rityta**: Det område som innehåller det faktiska data som visualiseras
+- **Axel**: Kanterna som begränsar ritytan, ofta benämnt som x- och y-axel för den vågräta ( - ) respektive lodräta ( | ) axeln
+- **Axelförklaring**: En rubrik som beskriver vad den angivna axeln visar för information
+- **Skalvärden**: Steg som anger specifika värden på den angivna axeln
+- **Stödlinjer**: Linjer vilka agerar som en förlängning av axlarnas skalvärden i bakgrunden av ritytan
+- **Titel/rubrik**: En rubrik för diagrammet
+- **Källhänvisning**: En text placerade i någon av de nedre hörnen som anger en källa för det visualiserade datamaterialet om sådan finns
+
+## Ett bra diagram
+För att skapa ett bra diagram behöver man tänka på flera olika saker.
+
+Vilken typ av variabel som ska visualiseras påverkar huruvida ett diagram är tydligt eller inte. Samma sorts diagram kan mycket enkelt och tydligt visualisera en kvalitativ variabel men värdelöst visualisera kvantitativa variabler...
+
+```{r echo = FALSE, fig.cap = "Exempel på stapeldiagram för en kvalitativ (t.vä.) och kvantitativ (t.hö.) variabel", fig.width = 8}
+
+data(iris)
+
+p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
+  labs(y = "Antal", x = "Art")
+
+p2 <- ggplot(iris) + aes(x = Petal.Length) + geom_bar() +
+  labs(y = "Antal", x = "Bladlängd")
+
+grid.arrange(p1, p2, nrow = 1)
+
+```
+
+Ritytan innehåller den information som ska förmedlas och bör därför få ta upp majoriteten av platsen i ett diagram. Om man anger för stora rubriker blir det lätt att man inkräktar på ritytan. Detsamma gäller om y-axeln innehåller långa skalvärdesnamn.
+
+```{r echo = FALSE, fig.cap = "Exempel på diagram med majoriteten rityta (t.vä.) och för liten rityta (t.hö.)", fig.width = 8}
+
+p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
+    labs(y = "Antal", x = "Art")
+
+p2 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
+  labs(y = "Antalet blommor av olika arter", x = "Art")
+
+grid.arrange(p1, p2, nrow = 1)
+
+```
+
+Stödlinjer bör finnas för att underlätta utläsningen av information långt från respektive axel. Dessa bör dock inte ta över diagrammet utan enbart finnas i bakgrunden. Notera att stödlinjer kan komma att justera beroende på vilket sammanhang diagrammen används till. Beroende på upplösning, ljusstyrka eller andra skärmegenskaper kan ibland ljusa och smala linjer försvinna in i den vita bakgrunden. Då är tjockare och starkare stödlinjer befogat.
+
+```{r echo = FALSE, fig.cap = "Exempel på stödlinjer som ligger i bakgrunden (t.vä.) och stödlinjer som stjäl fokus från informationen (t.hö.)", fig.width = 8}
+
+p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
+    labs(y = "Antal", x = "Art")
+
+p2 <- p1 + theme(panel.grid.major.y = element_line(color = "black"),
+                 panel.grid.minor.y = element_line(color = "black"))
+
+grid.arrange(p1, p2, nrow = 1)
+
+```
+
+Ett bra diagram har också läsbar text oavsett storleken på diagrammet. En bra referens kan vara att förhålla den minsta texten i diagrammet till ungefär samma storlek som brödtexten i rapporten eller presentationen. Försök att alltid tänka på att underlätta för läsaren!
+
+```{r echo = FALSE, fig.cap = "Exempel på läsbar text (t.vä.) och på gränsen till för liten text (t.hö.)", fig.width = 8}
+
+p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
+    labs(y = "Antal", x = "Art") 
+
+p2 <- p1 + theme(axis.text = element_text(size = 8, color = "black"),
+                 axis.title.y = element_text(angle = 0, vjust = 0.5, size = 9),
+                 axis.title.x = element_text(size = 9))
+
+grid.arrange(p1, p2, nrow = 1)
+
+```
+
+Källhänvisning bör finnas i alla diagram där informationen är hämtat från någon annan källa än oss själva. 
+
+```{r echo = FALSE, fig.cap = "Exempeldiagram med källhänvisning", fig.width = 4}
+
+ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
+  labs(y = "Antal", x = "Art", caption = "Källa: Fisher, R. A. (1936)")
+
+```

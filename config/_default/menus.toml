@@ -38,6 +38,26 @@
   parent = "Course Materials"
   url = "732G81/"
 
+[[teaching]]
+  name = "732G45 (SE)"
+  parent = "Course Materials"
+  url = "732G45/"
+
+[[732G45]]
+  name = "Other materials"
+  url = "/teaching"
+
+[[732G12]]
+  name = "Other materials"
+  url = "/teaching"
+
+[[732G81]]
+  name = "Other materials"
+  url = "/teaching"
+
+[[NDAB02]]
+  name = "Other materials"
+  url = "/teaching"
 
 
 # Link to a PDF of your resume/CV from the menu.
