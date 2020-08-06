@@ -17,12 +17,6 @@ tags:
 - R
 - Visualization
 
-output: 
-  language:
-    label:
-      fig: "Figur "
-      tab: "Tabell "
-
 # Add menu entry to sidebar.
 # - name: Declare this menu item as a parent with ID `name`.
 # - weight: Position of link in menu.
@@ -33,11 +27,18 @@ menu:
     weight: 3
 ---
 
+
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, eval = TRUE, fig.pos = 'H', fig.height = 2, fig.align = "center", fig.width = 6)
 
 source("packages_732g45.r")
+
+figures("fig1", "Exempel på stapeldiagram för en kvalitativ (t.vä.) och kvantitativ (t.hö.) variabel", display = FALSE)
+figures("fig2", "Exempel på diagram med majoriteten rityta (t.vä.) och för liten rityta (t.hö.)", display = FALSE)
+figures("fig3", "Exempel på stödlinjer som ligger i bakgrunden (t.vä.) och stödlinjer som stjäl fokus från informationen (t.hö.)", display = FALSE)
+figures("fig4", "Exempel på läsbar text (t.vä.) och på gränsen till för liten text (t.hö.)", display = FALSE)
+figures("fig5", "Exempeldiagram med källhänvisning", display = FALSE)
 
 ```
 
@@ -58,7 +59,7 @@ För att skapa ett bra diagram behöver man tänka på flera olika saker.
 
 Vilken typ av variabel som ska visualiseras påverkar huruvida ett diagram är tydligt eller inte. Samma sorts diagram kan mycket enkelt och tydligt visualisera en kvalitativ variabel men värdelöst visualisera kvantitativa variabler...
 
-```{r echo = FALSE, fig.cap = "Exempel på stapeldiagram för en kvalitativ (t.vä.) och kvantitativ (t.hö.) variabel", fig.width = 8}
+```{r echo = FALSE, fig.cap = figures("fig1"), fig.width = 8}
 
 data(iris)
 
@@ -74,7 +75,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 Ritytan innehåller den information som ska förmedlas och bör därför få ta upp majoriteten av platsen i ett diagram. Om man anger för stora rubriker blir det lätt att man inkräktar på ritytan. Detsamma gäller om y-axeln innehåller långa skalvärdesnamn.
 
-```{r echo = FALSE, fig.cap = "Exempel på diagram med majoriteten rityta (t.vä.) och för liten rityta (t.hö.)", fig.width = 8}
+```{r echo = FALSE, fig.cap = figures("fig2"), fig.width = 8}
 
 p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
     labs(y = "Antal", x = "Art")
@@ -88,7 +89,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 Stödlinjer bör finnas för att underlätta utläsningen av information långt från respektive axel. Dessa bör dock inte ta över diagrammet utan enbart finnas i bakgrunden. Notera att stödlinjer kan komma att justera beroende på vilket sammanhang diagrammen används till. Beroende på upplösning, ljusstyrka eller andra skärmegenskaper kan ibland ljusa och smala linjer försvinna in i den vita bakgrunden. Då är tjockare och starkare stödlinjer befogat.
 
-```{r echo = FALSE, fig.cap = "Exempel på stödlinjer som ligger i bakgrunden (t.vä.) och stödlinjer som stjäl fokus från informationen (t.hö.)", fig.width = 8}
+```{r echo = FALSE, fig.cap = figures("fig3"), fig.width = 8}
 
 p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
     labs(y = "Antal", x = "Art")
@@ -102,7 +103,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 Ett bra diagram har också läsbar text oavsett storleken på diagrammet. En bra referens kan vara att förhålla den minsta texten i diagrammet till ungefär samma storlek som brödtexten i rapporten eller presentationen. Försök att alltid tänka på att underlätta för läsaren!
 
-```{r echo = FALSE, fig.cap = "Exempel på läsbar text (t.vä.) och på gränsen till för liten text (t.hö.)", fig.width = 8}
+```{r echo = FALSE, fig.cap = figures("fig4"), fig.width = 8}
 
 p1 <- ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
     labs(y = "Antal", x = "Art") 
@@ -117,7 +118,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 Källhänvisning bör finnas i alla diagram där informationen är hämtat från någon annan källa än oss själva. 
 
-```{r echo = FALSE, fig.cap = "Exempeldiagram med källhänvisning", fig.width = 4}
+```{r echo = FALSE, fig.cap = figures("fig5"), fig.width = 4}
 
 ggplot(iris) + aes(x = Species) + geom_bar(width = 0.6) +
   labs(y = "Antal", x = "Art", caption = "Källa: Fisher, R. A. (1936)")

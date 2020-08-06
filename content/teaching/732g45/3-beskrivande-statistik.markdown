@@ -18,12 +18,6 @@ tags:
 - Visualization
 - Descriptive statistics
 
-output: 
-  language:
-    label:
-      fig: "Figur "
-      tab: "Tabell "
-
 # Add menu entry to sidebar.
 # - name: Declare this menu item as a parent with ID `name`.
 # - weight: Position of link in menu.
@@ -41,7 +35,6 @@ Den absolut enklaste formen av visualisering är stapeldiagram. Denna diagramtyp
 
 Olika programvaror kräver olika mycket bearbetning av datamaterialet innan diagrammet kan skapas. Vissa kräver att du själv skapar en frekvenstabell och anger att höjden av respektive stapel ska bestämmas av den tillhörande frekvensen, medan andra kan göra dessa beräkningar direkt på rådata.
 
-### R 
 Som tidigare nämnt om R använder sig programmet av diverse paket som innehåller redan skapade funktioner för att lösa diverse arbetsuppgifter. För visualisering kommer vi använda oss främst av paketet `ggplot2` som bygger på vad som kallas för [*grammar of graphics*](https://www.researchgate.net/publication/5142951_The_Grammar_of_Graphics). Detta är ett försök till att formalisera ett språk för hur man enhetligt bör "skriva" visualiseringar och även SPSS använder sig av grunderna till detta språk. Det första steget för att få ta del av funktionerna är att ladda paketet till din R-session genom:
 
 
@@ -49,7 +42,7 @@ Som tidigare nämnt om R använder sig programmet av diverse paket som innehåll
 require(ggplot2)
 ```
 
-Paketets visualiseringar utgår ifrån en `data.frame` vilket innebär att vi behöver ladda in ett datamaterial innan vi kan påbörja visualiseringarna. Detta kan göras med någon utav funktionerna `read.csv()`, `read.csv2()` osv. **Se till att datamaterialet som laddats in ser ut som vi förväntar att det ska göra**, exempelvis att decimalerna är korrekt angivna, att vi har lika många variabler i R som i Excel, och liknande. Med koden nedan kan datamaterialet som används som exempel genom hela denna text laddas in i R till objektet som kallas `exempeldata`. Vi kan även se hur materialet ser ut genom att använda `head()` som skriver ut ett antal observationer. Materialet ser ut att innehålla fem variabler, varav två är kvalitativa.
+Paketets visualiseringar utgår ifrån en `data.frame` vilket innebär att vi behöver ladda in ett datamaterial innan vi kan påbörja visualiseringarna. Detta kan göras med någon utav funktionerna `read.csv()`, `read.csv2()` osv. **Se till att datamaterialet som laddats in ser ut som vi förväntar att det ska göra**, exempelvis att decimalerna är korrekt angivna, att vi har lika många variabler i R som i Excel, och liknande. Med koden nedan kan datamaterialet (<!--html_preserve--><a href="data:application/zip;base64,UEsDBBQAAgAIAIdUSk+hZ/ISPAIAAPsFAAAWAAAANzMyRzQ1X2V4ZW1wZWxkYXRhLmNzdl1US28TQQy+V+p/GT9nLJ+4IHEBJBD3QCoUdZVFSSnqv8ebeW1zW3m89vea+XV6PS3Xl8P56Ifl+HTxn6fFr2/X5/Xsy3p+fPh6uDiqf/nztHiKr2xUi8z+cb0cHZ1NSqlFYv+xLq+rk3NihVYl/3T+/XR2jiqatSr6h7/HU7SSGuPjw7dTNC1bvc5AJzNK44BL/YFdQAkGjNod1axcRrfoGJMBkeeYtB08X/8dNkgQ8Ilknop/Pl2vh/NtoJjUNZIHsUy0Q8tUtQEXyjbXk7UfknNG5aZk44yOoKkpSdDkQdeSSVtr6kBCdiuKw4vbhChyVpp08T0rUUsNu6YKkVxFqBUZq31hSYxp8Cj59/VtfTlsplio1npzd0oQU2pTreMDL8a5k8mDTOQCmktS+raMhjZ434rJqTDZHZWbc8ooeRwE9xY5sbL3QCc+6vqFzU1qYUttJUOPEFMEtBVtRiic6pB7sELLQtICHtiaQsEvCfDe8EGcJKchR19omG1Am0NMTScTnqkxsE6FKu/gZ3knFOe952EvIsxTzPUvCFuNZS/vDRK4EqYdARkXGkvR+0RowAZ5175bflOjxwi5RyNyblxa5MhmormMdFGe971gwbF4xIviqsjITG3OMS7uUFtoNeEbdCC6a425Icy8KvEcDXgMkGfAhCdC1aK71wTmPwqM76ZNMzVhD0p/80JmUOQ7TKEAJrHh7+Aq8RimvYfNK0EW2A/pyqdNiD5fUr9SigA4xt89eGm7rf8BUEsDBBQAAgAIAJqwSU+2weuLeAEAAOACAAANAAAAdGlkc3NlcmllLmNzdjWSwW1cMQxE7wHSQ0oQRZEUMQ2kgtwNeOGLYQObbSEtpALX4EsOOWxBaSFDyj4sID0Nh0Pu//fn7/3XFd8vzw/fnh9eHi83/Li//bxdri+v12sR3H/X9en+fqvr1y+SYVAVSDpmShMnmSQTMw4JaJSGWvEmG+qLRDH3bpJNpuSnzx7QbZhDqDlESEb7zGifPbG0qthzjCaKtUiYQIc2WVgerFDotCaGRarCFHKIY1U6ZdK5mgRMTkr1bLJhxvfcWOOQhHEC5TRL2ycHXCqTMEVrUuCDzpUiOzP34s4EdDfvXvQI5l318qFZiMVJXBB2nI0ngTGh7+Ps1Bjd2fPsOQPBKS0TMXqrzLrHrD6Is3m+bXdWKLZQMwfrt9GdutjWRLC566juazaZ2Jxtl4+fKkWq8Ueta5OF5H5SSptNDDI4Ri2TH0ojJ6K3DNd69IYBEf5pMphXRI6yjvEpl3F6JKQ+CBHlSWZHkVGw5OYFV0OKptY9yr1G/Q9QSwECHgAUAAIACACHVEpPoWfyEjwCAAD7BQAAFgAAAAAAAAABACAAAAAAAAAANzMyRzQ1X2V4ZW1wZWxkYXRhLmNzdlBLAQIeABQAAgAIAJqwSU+2weuLeAEAAOACAAANAAAAAAAAAAEAIAAAAHACAAB0aWRzc2VyaWUuY3N2UEsFBgAAAAACAAIAfwAAABMEAAAAAA==" download="data_sets.zip">länk för nedladdning</a><!--/html_preserve-->) som används som exempel genom hela detta material laddas in i R till objektet som kallas `exempeldata`. Vi kan även se hur materialet ser ut genom att använda `head()` som skriver ut ett antal observationer. Materialet ser ut att innehålla fem variabler, varav två (`civilstånd` och `bil`) är kvalitativa.
 
 
 ```r
@@ -68,7 +61,7 @@ head(exempeldata, n = 5)
 ```
 
 
-#### Grundkomponenter 
+### Grundkomponenter 
 Vi kan nu börja med att skapa stapeldiagrammet. Vi börjar med de tre grundkomponenterna av ett `ggplot`-diagram; `ggplot()`, `aes()` och `geom()`. Alla diagram måste innehålla dessa tre komponenter i någon form för att vi ska kunna producera något överhuvudtaget, sen kan vi lägga till andra instruktioner för att ändra diagrammets utseende.
 
 
@@ -82,7 +75,7 @@ ggplot(exempeldata)
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
 
-Som vi ser skapas inget utifrån detta kommando, vi har bara sagt åt R att använda datamaterialet men inte vad den ska göra med det. Nästa steg är att ange vilka variabler vi vill använda för axlarna i diagrammet. När det kommer till stapeldiagram finns två olika sätt att göra; antingen har vi rådata och låter R räkna ut frekvensen av de olika kategorierna själv eller så skapar vi en egen frekvenstabell och anger `y = frekvens`. Vi kommer först börja med exemplet utifrån rådata:
+Som vi ser skapas inget utifrån detta kommando, vi har bara sagt åt R att använda datamaterialet men inte vad den ska göra med det. Nästa steg är att ange vilka variabler vi vill använda för axlarna i diagrammet. När det kommer till stapeldiagram kan vi skapa diagrammet på två olika sätt; antingen har vi *rådata* och låter R räkna ut frekvensen av de olika kategorierna själv **eller** så har vi sammanställd data i en *frekvenstabell* och anger frekvensen som höjden genom argumentet: `y = frekvens`. Vi kommer först börja med att skapa diagrammet utifrån rådata:
 
 
 ```r
@@ -125,7 +118,7 @@ Det är nu den största funktionaliteten med `ggplot2` kommer in. Vi kan spara i
 p <- ggplot(exempeldata) + aes(x = bil) + geom_bar(aes(y = stat(count/sum(count)))) + theme_bw()
 ```
 
-Nu ligger alla instruktioner för **hur** R ska rita upp diagrammet sparat i `p` men för att R också ska producera diagrammet måste vi också ange det för programmet likt:
+Nu ligger alla instruktioner för **hur** R ska rita upp diagrammet sparat i `p` men för att R också **ska** rita diagrammet måste vi också ange det för programmet likt:
 
 
 ```r
@@ -152,9 +145,7 @@ p + scale_y_continuous(labels = scales::percent)
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
 
-Notera att diagrammet inte roterades i det andra diagrammet när vi ändrade hur skalvärdena på y-axeln ser ut. Eftersom att vi inte sparar de tillagda instruktionerna någonstans kommer endast föregående diagram 
-
-Detta är för att vi endast sagt åt R att rita diagrammet med vardera tillagda instruktion vid två olika tillfällen utan att ha sparat de någonstans. För att R ska spara dessa instruktioner tillsammans med grundkomponenterna vi angivit innan måste vi spara ovanstående kod till ett objekt:
+Notera att diagrammet inte roterades i det andra diagrammet när vi ändrade hur skalvärdena på y-axeln ser ut. Eftersom att vi inte sparar de tillagda instruktionerna någonstans kommer förändringarna endast påverka det diagram som vi tidigare kallat `p`. För att R ska spara dessa nya instruktioner tillsammans med grundkomponenterna vi angivit innan, måste vi spara ovanstående kod till ett objekt:
 
 
 ```r
@@ -165,11 +156,13 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Sammanställd data 
-Om vi istället för rådata har sammanställd data exempelvis i form utav en frekvenstabell kan vi ändå skapa samma ovanstående diagram. Vi tänker oss att data om bilarna istället för de 64 observationerna är presenterad i följande tabell:
+Denna kod sparar de nya instruktionerna tillsammans med de första grundkomponenterna i samma objekt, `p`, och skriver över de tidigare.
+
+### Sammanställd data 
+Om vi istället för rådata har sammanställd data, exempelvis i form utav en frekvenstabell, kan vi ändå skapa samma ovanstående diagram. Vi tänker oss att rådata om bilarna istället för de 64 observationerna är presenterad i följande tabell:
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>Table 1: Fördelning av bilmärken i urvalet</caption>
+<caption>1: Tabell  1: Fördelning av bilmärken i urvalet</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Märke </th>
@@ -238,10 +231,7 @@ ggplot(exempeltabell) + aes(x = Märke, y = Frekvens) + geom_bar(stat = "identit
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" />
 
-
-
-
-#### Färger 
+### Färger 
 Om vi vill ändra färgen på olika delar av diagrammet exempelvis staplarna kan vi göra detta inuti `geom_bar()` med argumenten `color` för kantlinjerna och `fill` för fyllnadsfärgen. För att se vilka färger som går att ange kan man köra funktionen `colors()` för deras namn eller hämta hem följande [PDF](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) som har färgerna utskrivna. Vi kommer senare titta närmare på färger och dess funktion i visualiseringar.
 
 
@@ -258,7 +248,7 @@ p
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
 
 
-#### Stödlinjer 
+### Stödlinjer 
 Nu vill vi ändra lite stödlinjer så att de syns och hjälper till att förtydliga informationen vi vill visa. När det kommer till stapeldiagram behövs inte stödlinjer på x-axeln då staplarna sträcker sig hela vägen ner till dess skalvärden. Däremot behöver vi förtydliga skalvärdena på y-axeln. För att ändra utseendet på olika delar i ett diagram används `theme()` och diverse olika argument däri. Titta i dokumentationen för funktionen för att få en inblick i vad som kan ändras i diagrammet. Oftast ska dessa delar anges med en utav `element`-funktioner, beroende på typen som ska ändras. Text ändras med `element_text()`, linjer med `element_line()` och delar kan helt och hållet tas bort genom `element_blank()`. Nedanstående kod ändrar stödlinjerna på y-axelns färg till lite mörkare grå än standardvärdet (`panel.grid.major` för stödlinjerna som följer skalvärdena, `panel.grid.minor` för stödlinjer emellan skalvärdena) och tar bort stödlinjerna från x-axeln.
 
 
@@ -273,7 +263,7 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Text 
+### Text 
 Det som saknas just nu i diagrammet är tydligare (och större) text som förklarar de olika delarna av diagrammet för läsaren. De olika etiketterna kan alla anges i samma funktion genom olika argument likt:
 
 
@@ -314,7 +304,7 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Skalvärden 
+### Skalvärden 
 Ibland kan de automatiskt genererade axelskalorna medföra svårigheter att utläsa informationen som vi ska presentera. Därför är det sista vi kommer titta på funktioner för att ändra dessa skalor. Vilken funktion vi vill använda och hur man kan ändra utseendet påverkas av vilken sorts variabel som anges på den specifika axeln. Exempelvis kanske vi vill i diagrammet ändra så att den **kontinuerliga** y-axeln endast visar skalvärden var 10:e procent istället för var 5:e som nu sker. Detta gör vi då via:
 
 
@@ -348,19 +338,11 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
 
-### SAS EG 
-
-### SPSS 
-
-
-
-
-## Grupperat stapeldiagram {.tabset}
+## Grupperat stapeldiagram
 Om vi har ett datamaterial bestående av flera kvalitativa variabler kan vi ibland vilja visualisera fördelningen av en variabel **grupperat** på en annan, exempelvis "Hur ser fördelningen av bilmärken ut, uppdelat på civilstånd?". Det kanske finns några intressanta relationer mellan dessa två variabler som vi skulle vilja undersöka vidare, men som tidigare sagt är visualisering alltid det första steget för att lära känna sitt datamaterial.
 
 I vårt exempeldata har vi två kvalitativa variabler, `civilstand` och `bil`. För att visualisera ett grupperat stapeldiagram behöver vi välja en grupperings- och en fördelningsvariabel. Fördelninsgsvariabeln kommer grupperas över varje enskilda kategori från grupperingsvariabeln. 
 
-### R
 I R måste vi ange grupperingsvariabeln likt det vi gjort tidigare som `x` och fördelningsvariabeln som `fill` inuti `aes()`. Detta kommer säga åt R att vardera värde på `bil` ska ha olika fyllnadsfärger. `position = "dodge"` bestämmer att staplarna ska ligga bredvid varandra och `position = "stack"` staplar de ovanpå varandra för ett s.k. stackat stapeldiagram. 
 
 
@@ -398,13 +380,13 @@ ggplot(exempeldata) + aes(x = civilstand, fill = bil) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-28-1.png" alt="Grupperat stapeldiagram med enkel summering (t.vä.) och gruppvis summering (t.hö.) till 100 procent" width="768" />
-<p class="caption">Figure 1: Grupperat stapeldiagram med enkel summering (t.vä.) och gruppvis summering (t.hö.) till 100 procent</p>
+<img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-28-1.png" alt="Figur  1: Grupperat stapeldiagram med enkel summering (t.vä.) och gruppvis summering (t.hö.) till 100 procent" width="768" />
+<p class="caption">1: Figur  1: Grupperat stapeldiagram med enkel summering (t.vä.) och gruppvis summering (t.hö.) till 100 procent</p>
 </div>
 
 Tolkningarna på vardera av dessa diagram skiljer sig åt och valet styrs av vilken sorts frågeställning som vi vill besvara med visualiseringen. En jämförelse av gruppernas fördelning skulle bli tydlig med en gruppvis summering, medan presentation av fördelningen i materialet kan visualiseras med den enkla summeringen.
 
-#### Förtydliga diagrammet
+### Förtydliga diagrammet
 Oavsett vilket sätt att summera staplarna som används ser de inte alls tydliga ut. Vi förtydligar till diagrammet med liknande hjälpfunktioner som tidigare stapeldiagram. Vi lägger till tydligare kantlinjer på staplarna, lägger till stödlinjer och etiketter, samt justerar utseendet på diverse texter samt ändrar skalan för y-axeln.
 
 
@@ -436,7 +418,7 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Färger
+### Färger
 Det som också urskiljer ett grupperat stapeldiagram med det skapades tidigare är att vi nu har en legend till höger av diagramytan som innehåller ytterligare information som krävs för att läsa av diagrammet. Vi har fått olika färger på den valda fördelningsvariabeln som kopplas samman till de olika kategorierna. Dessa vill vi nu ändra tillsammans med att ändra lite information i legenden för att göra den tydligare.
 
 För att skapa ett diagram som har en enhetlig och tydlig färgpalett kommer paketet `RColorBrewer` till användning. Ladda paketet med `require(RColorBrewer)` och titta på de olika färgkategorierna som finns att använda genom `display.brewer.all()`. Det rekommenderas att välja någon av de monokromatiska färgskalorna likt `"Oranges"` eller `"Purples"`.
@@ -454,14 +436,9 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
 
-### SAS EG
-
-### SPSS
-
-## Histogram {.tabset}
+## Histogram
 Om variabeln istället är kvantitativ och vi vill presentera fördelningen av denna variabel, är histogram (eller lådagram) lämpligt att använda.
 
-### R
 Likt tidigare diagram i R behöver vi först ange vilket datamaterial samt vilken variabel som vi ska visualisera. 
 
 
@@ -509,15 +486,10 @@ p
 
 <img src="/teaching/732g45/3-beskrivande-statistik_files/figure-html/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
-### SAS EG
-
-### SPSS
-
 ## Lådagram {.tabset}
 Ett alternativ att presentera fördelningen för en kvantitativ variabel är lådagram. Denna visualiseringstyp lämpar sig bättre om det finns extremvärden i materialet då diagrammet utgår ifrån kvartiler.
 
 
-### R
 Vi börjar strukturera ett lådagram på samma sätt som vi gjorde med histogrammet, dock behöver vi använda ett knep för att R ska skapa ett snyggt diagram. I `aes()` måste `x = factor(0)` som är ett sätt för R att skapa en tom kategorisk variabel. Lådagrammet skapas med `geom_boxplot()`.
 
 För att ta bort onödiga skalvärden och axelförklaring för den tomma variabeln som vi skapat används värdet `NULL` på de argument som vi vill ta bort, exempelvis `breaks` i `scale_x_discrete()`.
