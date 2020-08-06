@@ -44,8 +44,6 @@ tables("tab3", "Aggregerad datamaterial för iris", display = FALSE)
 ## Spridningsdiagram
 När ett datamaterial innehåller flera variabler kan det vara intressant att undersöka vilka (om några) variabler har ett samband med varandra. Detta kan göras på olika sätt, men visualisering i ett spridningsdiagram är ett sätt som möjliggör att se många olika typer av samband mellan **två** variabler.
 
-
-### R
 Vi utgår ifrån tidigare datamaterial och fokuserar på de två kvantitativa variablerna `alder` och `lon` i `aes()`. Här bör vi välja variabler till de olika axlarna som medför en logisk tolkning av vilken variabel som förklarar den andra. Den förklarande variabeln, `x`, anser vi förklara responsvariabeln, `y`, och med dessa variabler är det mer logiskt att `alder` förklarar `lon` för en individ. 
 
 För att skapa ett spridningsdiagram används `geom_point()`. Argument som kan vara av intresse i denna funktion är `color`, `shape` eller `size`.
@@ -95,7 +93,7 @@ p + geom_smooth(method = lm, se = FALSE)
 
 ```
 
-#### Visualisering av olika datamaterial i samma diagram
+### Visualisering av olika datamaterial i samma diagram
 ```{r echo = FALSE}
 
 exempeldata_extrem <- exempeldata %>% 
@@ -150,7 +148,7 @@ p
 
 ```
 
-#### Extra visualisering
+### Extra visualisering
 Det kanske också kan vara intressant att peka ut vilka observationer som plockas bort vilket kan göras genom att skapa ytterligare ett datamaterial med **enbart** de valda extremvärdena. Vi kan då lägga till ett till `geom_point()` till diagrammet där vi ändrar `shape` till någon annan symbol som tydliggör att dessa har plockats bort.
 
 ```{r}
@@ -161,13 +159,7 @@ p + geom_point(data = exempeldata_extrem_points,
 
 ```
 
-### SAS EG
-
-### SPSS
-
 ## Linjediagram
-
-### R
 
 ```{r echo = FALSE}
 
@@ -197,7 +189,7 @@ När materialet nu innehåller tre variabler (en som visar tid, en som visar vil
 Exempeldata innehåller information om antalet anmälda våldsbrott per 100 000 invånare i hela landet, Västernorrland och Östergötland och är hämtat från SCB.
 
 
-#### En tidsserie
+### En tidsserie
 Om endast en serie ska visualiseras kan vi plocka ut en grupp från det tidigare materialet och visualisera endast det. Vi gör detta med `filter()` från `dplyr`-paketet. Kodexemplet gör denna filtrering inuti `ggplot()` men vi skulle lika gärna skapa ett filtrerad data som sparas som ett nytt objekt och använda det senare i `ggplot()`.
 
 ```{r}
@@ -257,7 +249,7 @@ p
 
 ```
 
-#### Flera tidsserier
+### Flera tidsserier
 
 För att visualisera flera tidsserier i ett diagram kräver `ggplot2` att datamaterialet ska vara formaterad med en grupperingsvariabel. För att R ska göra skillnad på dessa olika grupper måste `group` och/eller `color` argumentet i `aes` innehålla den grupperingsvariabel som finns i data.
 
@@ -312,14 +304,7 @@ p
 
 ```
 
-
-### SAS EG
-
-### SPSS
-
 ## Punktdiagramsmatris
-
-### R
 
 För att skapa en punktdiagramsmatris (spridningsdiagramsmatris) i R behöver vi använda ytterligare ett paket, nämligen `GGally`. I detta paket finns funktionen `ggpairs()` som är (av författarna) skapat som som en samling `ggplot2`-instruktioner som möjliggör skapandet av flera spridningsdiagram inuti ett och samma diagram. Kom ihåg att ladda in detta nya paket i R innan vi fortsätter.
 
@@ -378,7 +363,7 @@ p
 
 ```
 
-#### Färgläggning av observationer beroende på klass
+###Färgläggning av observationer beroende på klass
 Det kan finnas tillfällen där samband mellan variabler ser olika ut beroende på en kategorisk variabel som inkluderas i datamaterialet. Detta *kan* också inkluderas i dessa diagram, men risken är att det blir för mycket information som trycks ihop på en för liten yta. Tyvärr finns inte ett enkelt sätt att ändra dessa färger eller skapa en legend som tydligt beskriver vilken färg som hör till vilken kategori...
 
 ```{r}
