@@ -34,8 +34,6 @@ menu:
 ## Spridningsdiagram
 När ett datamaterial innehåller flera variabler kan det vara intressant att undersöka vilka (om några) variabler har ett samband med varandra. Detta kan göras på olika sätt, men visualisering i ett spridningsdiagram är ett sätt som möjliggör att se många olika typer av samband mellan **två** variabler.
 
-
-### R
 Vi utgår ifrån tidigare datamaterial och fokuserar på de två kvantitativa variablerna `alder` och `lon` i `aes()`. Här bör vi välja variabler till de olika axlarna som medför en logisk tolkning av vilken variabel som förklarar den andra. Den förklarande variabeln, `x`, anser vi förklara responsvariabeln, `y`, och med dessa variabler är det mer logiskt att `alder` förklarar `lon` för en individ. 
 
 För att skapa ett spridningsdiagram används `geom_point()`. Argument som kan vara av intresse i denna funktion är `color`, `shape` eller `size`.
@@ -89,7 +87,7 @@ p + geom_smooth(method = lm, se = FALSE)
 
 <img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Visualisering av olika datamaterial i samma diagram
+### Visualisering av olika datamaterial i samma diagram
 
 Om extremvärden skulle finnas i datamaterialet kommer sambandet (och en inritad regressionslinje) riskera att förskjuta det generella samband som finns. Observera att det i praktiken inte är så lätt att bara plocka bort extremvärden från datamaterialet utan en djupare dykning i orsakerna till detta värde. Är extremvärden en felinmatning eller är det ett riktigt värde som är en del av målpopulationen? För att visa hur vi kan använda olika datamaterial i samma diagram kommer vi göra det naïva och plocka bort dessa.
 
@@ -139,7 +137,7 @@ p
 
 <img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Extra visualisering
+### Extra visualisering
 Det kanske också kan vara intressant att peka ut vilka observationer som plockas bort vilket kan göras genom att skapa ytterligare ett datamaterial med **enbart** de valda extremvärdena. Vi kan då lägga till ett till `geom_point()` till diagrammet där vi ändrar `shape` till någon annan symbol som tydliggör att dessa har plockats bort.
 
 
@@ -151,13 +149,7 @@ p + geom_point(data = exempeldata_extrem_points,
 
 <img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
 
-### SAS EG
-
-### SPSS
-
 ## Linjediagram
-
-### R
 
 
 
@@ -208,7 +200,7 @@ När materialet nu innehåller tre variabler (en som visar tid, en som visar vil
 Exempeldata innehåller information om antalet anmälda våldsbrott per 100 000 invånare i hela landet, Västernorrland och Östergötland och är hämtat från SCB.
 
 
-#### En tidsserie
+### En tidsserie
 Om endast en serie ska visualiseras kan vi plocka ut en grupp från det tidigare materialet och visualisera endast det. Vi gör detta med `filter()` från `dplyr`-paketet. Kodexemplet gör denna filtrering inuti `ggplot()` men vi skulle lika gärna skapa ett filtrerad data som sparas som ett nytt objekt och använda det senare i `ggplot()`.
 
 
@@ -269,7 +261,7 @@ p
 
 <img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Flera tidsserier
+### Flera tidsserier
 
 För att visualisera flera tidsserier i ett diagram kräver `ggplot2` att datamaterialet ska vara formaterad med en grupperingsvariabel. För att R ska göra skillnad på dessa olika grupper måste `group` och/eller `color` argumentet i `aes` innehålla den grupperingsvariabel som finns i data.
 
@@ -325,263 +317,3 @@ p
 ```
 
 <img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
-
-
-### SAS EG
-
-### SPSS
-
-## Punktdiagramsmatris
-
-### R
-
-För att skapa en punktdiagramsmatris (spridningsdiagramsmatris) i R behöver vi använda ytterligare ett paket, nämligen `GGally`. I detta paket finns funktionen `ggpairs()` som är (av författarna) skapat som som en samling `ggplot2`-instruktioner som möjliggör skapandet av flera spridningsdiagram inuti ett och samma diagram. Kom ihåg att ladda in detta nya paket i R innan vi fortsätter.
-
-
-```r
-require(GGally)
-```
-
-Datamaterialet som används till detta exempel är ett utav de inbyggda materialen som finns i R, nämligen `iris`. Det innehåller fyra stycken kontinuerliga variabler som beskriver olika mått på blommor och ytterligare en kategorisk variabel som anger vilken art observationen tillhör. Datamaterialet ser ut som följer:
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>2: Tabell  2: Första observationerna i Iris-data</caption>
- <thead>
-  <tr>
-   <th style="text-align:right;"> Sepal.Length </th>
-   <th style="text-align:right;"> Sepal.Width </th>
-   <th style="text-align:right;"> Petal.Length </th>
-   <th style="text-align:right;"> Petal.Width </th>
-   <th style="text-align:left;"> Species </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 5.1 </td>
-   <td style="text-align:right;"> 3.5 </td>
-   <td style="text-align:right;"> 1.4 </td>
-   <td style="text-align:right;"> 0.2 </td>
-   <td style="text-align:left;"> setosa </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4.9 </td>
-   <td style="text-align:right;"> 3.0 </td>
-   <td style="text-align:right;"> 1.4 </td>
-   <td style="text-align:right;"> 0.2 </td>
-   <td style="text-align:left;"> setosa </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4.7 </td>
-   <td style="text-align:right;"> 3.2 </td>
-   <td style="text-align:right;"> 1.3 </td>
-   <td style="text-align:right;"> 0.2 </td>
-   <td style="text-align:left;"> setosa </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4.6 </td>
-   <td style="text-align:right;"> 3.1 </td>
-   <td style="text-align:right;"> 1.5 </td>
-   <td style="text-align:right;"> 0.2 </td>
-   <td style="text-align:left;"> setosa </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5.0 </td>
-   <td style="text-align:right;"> 3.6 </td>
-   <td style="text-align:right;"> 1.4 </td>
-   <td style="text-align:right;"> 0.2 </td>
-   <td style="text-align:left;"> setosa </td>
-  </tr>
-</tbody>
-</table>
-
-`ggpairs()` kräver vissa argument för att kunna skapa ett diagram;
-
-   - `data`, anger vilket datamaterial som vi vill visualisera,
-   - `columns`, anger vilka kolumner ur datamaterialet som ska visualiseras,
-   - `title`, anger en titelrubrik för diagrammet,
-   - `upper`, anger vad vi vill att den *övre diagonalen* ska visa för information,
-   - `diag`, anger vad vi vill att *diagonalen* ska visa för information,
-   - `lower`, anger vad vi vill att den *nedre diagonalen* ska visa för information,
-   - `axisLabels`, anger inställningar för skalvärden i diagrammet.
-   
-Notera att `upper`, `diag`, och `lower` måste ange sina argument i en `list()` där variabeltypen måste anges först. I detta exempel kommer vi behöva skriva `list(continuous = )` då variablerna är kontinuerliga. Gå in i dokumentationen för funktionen och i *Details* står vilka andra diagram som kan visualiseras i de olika områdena.
-
-Nedanstående kod kommer skapa ett diagram innehållande spridningsdiagram i den nedre diagonalen över de fyra kontinuerliga variablerna som ligger på position `1:4` i datamaterialet `iris`. Vi väljer också här att plocka bort skalvärden på axlarna då syftet med dessa diagram är att visa sambandet mellan variabler och inte specifika värden som variablerna eller observationer förhåller sig till. Att vi tar bort skalvärden möjliggör också en större rityta som behövs om vi har ett flertal variabler som ska visualiseras.
-   
-
-```r
-p <- ggpairs(data = iris,
-             columns = 1:4,
-             title = "Samband mellan mått på blommor",
-             upper = list(continuous = "points"),
-             diag = list(continuous = "blankDiag"),
-             lower = list(continuous = "blank"),
-             axisLabels = "none"
-             ) 
-
-p
-```
-
-<img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
-
-Som tur är finns det möjlighet att ändra vissa delar av diagrammet för att förtydliga vissa delar.
-
-
-```r
-p <- p + theme_bw() + 
-  theme(plot.title = element_text(hjust = 0.5))
-
-p
-```
-
-<img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
-
-#### Färgläggning av observationer beroende på klass
-Det kan finnas tillfällen där samband mellan variabler ser olika ut beroende på en kategorisk variabel som inkluderas i datamaterialet. Detta *kan* också inkluderas i dessa diagram, men risken är att det blir för mycket information som trycks ihop på en för liten yta. Tyvärr finns inte ett enkelt sätt att ändra dessa färger eller skapa en legend som tydligt beskriver vilken färg som hör till vilken kategori...
-
-
-```r
-ggpairs(data = iris,
-        columns = 1:4,
-        title = "Samband mellan mått på blommor",
-        upper = list(continuous = "points"),
-        diag = list(continuous = "blankDiag"),
-        lower = list(continuous = "blank"),
-        axisLabels = "none",
-        mapping = aes(color = Species)
-        ) + 
-  theme_bw() + 
-  theme(plot.title = element_text(hjust = 0.5))
-```
-
-<img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" />
-
-
-
-
-## Tree maps
-För att skapa en tree map behöver vi först ladda paketet `portfolio` samt hämta hem den förändrade `treemap`-funktionen via `source()`.
-
-
-```r
-require(portfolio)
-
-source("https://raw.githubusercontent.com/canadice/visualization_literature/master/treemapbrewer.r")
-```
-
-Nu har vi skapat en ny funktion som heter `treemap_brewer()` som har följande argument:
-
-- `id` styr vilken variabel i datamaterialet som används som etikett i varje cell,
-- `group` styr vilken variabel som anger vilka/hur många celler som ska skapas,
-- `area` styr vilken variabel som bestämmer storleken på cellen,
-- `color` styr vilken variabel som bestämmer färgnyansen på cellen,
-- `textcol` styr färgen på texten i cellerna,
-- `linecol` styr färgen på kantlinjen mellan cellerna,
-- `pal` anger en `RColorBrewer` palette med färger som används för färgläggning av cellerna,
-- `main` styr diagramrubriken.
-
-För att exemplifiera denna diagramtyp kommer `iris`-data användas igen. En beskrivning av detta material finns tidigare i kodmanualen. Vi vill nu skapa en tree map där vi vill se samband mellan `Sepal.Length` och `Petal.Length` för de tre olika arterna (`Species`) av blommor. För att kunna skapa detta diagram behöver vi ha **en** observation per art så lite databearbetning behöver först göras i antingen Excel eller R. 
-
-Vi vill alltså *aggregera* materialet från det rådata (mikrodata) som anges för varje objekt till gruppvis data (makrodata) för varje art och detta gör vi genom att skapa ett medelvärde per art för de två undersökta variablerna. Vi skulle också kunna tänka oss att vi vill summera de olika arternas mått men i detta material är det nog lämpligare att titta på de genomsnittliga längderna som en egenskap av arten.
-
-Nedanstående kod använder sig utav `dplyr`-paketets funktioner för databearbetning som kommer tas upp mycket mer i Programmering i R under vårterminen.
-
-
-```r
-iris_agg <- iris %>% group_by(Species) %>% summarise(sepal_mean = mean(Sepal.Length), 
-                                                     petal_mean = mean(Petal.Length))
-
-kable(iris_agg, format = "html", caption = tables("tab3")) %>%
-  kable_styling(position = "center", full_width = FALSE)
-```
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>3: Tabell  3: Aggregerad datamaterial för iris</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Species </th>
-   <th style="text-align:right;"> sepal_mean </th>
-   <th style="text-align:right;"> petal_mean </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> setosa </td>
-   <td style="text-align:right;"> 5.006 </td>
-   <td style="text-align:right;"> 1.462 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> versicolor </td>
-   <td style="text-align:right;"> 5.936 </td>
-   <td style="text-align:right;"> 4.260 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> virginica </td>
-   <td style="text-align:right;"> 6.588 </td>
-   <td style="text-align:right;"> 5.552 </td>
-  </tr>
-</tbody>
-</table>
-
-Nu har vi datamaterialet enligt det format som behövs för att skapa en tree map, vi har två kontinuerliga variabler samt en kategorisk variabel. Notera att vi i denna funktion måste ange *datamaterialet$variabelnamnet* för att lägga till variablerna som vi vill använda i funktionen.
-
-
-```r
-treemap_brewer(id = iris_agg$Species, 
-               group = iris_agg$Species, 
-               area = iris_agg$sepal_mean,
-               color = iris_agg$petal_mean,
-               textcol = "black",
-               linecol = "black",
-               pal = "Oranges",
-               main = "Tree map över olika arter av blommor")
-```
-
-<img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
-
-**Tänk på att i figurbeskrivningen ange vilka variabler som styr storleken och färgen i diagrammet!**
-
-## Parallellkoordinatdiagram
-
-Denna sorts diagram ämnar att identifiera *kluster* av observationer i ett datamaterial, samt att kunna se korrelationen mellan intilliggande variabler. För att skapa diagrammet används `ggparcoord()` ur paketet `GGally` som vi tittat på tidigare. 
-
-Argumenten som vi är intresserade av är:
-
-- `data` som anger vilket material som ska visualiseras,
-- `col` som anger vilka kolumnindex som ska visualiseras,
-- `scale` som **alltid** ska vara `"uniminmax"` för att standardisera y-axeln till samma skalor.
-
-Till detta diagram kan vi använda andra `ggplot2`-funktionalitet för text och estetik.
-
-
-```r
-ggparcoord(data = iris, 
-           col = 1:4,
-           scale = "uniminmax") +
-  # Lägger till annan estetik likt tidigare diagram
-  theme_bw() + 
-  theme(axis.title.y = 
-          element_text(angle = 0, 
-                       hjust = 1, 
-                       vjust = 0.5), 
-        plot.title = 
-          element_text(hjust = 0.5),
-        plot.subtitle = 
-          element_text(hjust = 0.5),
-        panel.grid.major.x = 
-          element_line(color = "gray"),
-        panel.grid.minor.x = 
-          element_line(color = "light gray"),
-        panel.grid.major.y = 
-          element_line(color = "gray"),
-        panel.grid.minor.y = 
-          element_line(color = "light gray")) + 
-  labs(title = "",
-       x = "Variabel",
-       y = "Värde",
-       caption = "Källa: Anderson, E - The New S Language (1935)")
-```
-
-<img src="/teaching/732g45/4-samband_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
-
-Till hjälp med tolkningen av detta diagram rekommenderas att läsa följande [länk](http://www.jmp.com/support/help/The_Parallel_Plot.shtml). 

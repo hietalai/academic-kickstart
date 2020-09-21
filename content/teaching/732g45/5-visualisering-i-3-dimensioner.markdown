@@ -1,0 +1,164 @@
+---
+# Course title, summary, and position.
+weight: 6
+
+# Page metadata.
+title: Visualisering i 3+ dimensioner
+linktitle: Visualisering i 3+ dimensioner
+date: "2020-09-21"
+lastmod: "2020-09-21"
+draft: false  # Is this a draft? true/false
+toc: true  # Show table of contents? true/false
+type: docs  # Do not modify.
+
+tags:
+- Swedish
+- Programming
+- R
+- Correlation
+- Visualization
+- Scatter plot matrix
+
+# Add menu entry to sidebar.
+# - name: Declare this menu item as a parent with ID `name`.
+# - weight: Position of link in menu.
+menu:
+  732G45:
+    name: Visualisering i 3+ dimensioner
+    parent: 732G45
+    weight: 6
+---
+
+
+
+## Visualisering i 3+ dimensioner
+För att skapa diagram med fler än 2 dimensioner kräver det att vi använder mer avancerade paket och funktioner. Detta är inget som inkluderas i denna kurs men om ni är intresserade av vilka paket som rekommenderas att använda och funktionerna för att skapa sådana typer av diagram kommer ett kortare exempel i slutet av denna sida.
+
+## Visualisering av samband i flera dimensioner
+Istället för att använda ett 3D-punktdiagram för att visualisera sambandet mellan dessa variabler kan en punktdiagramsmatris skapas. För att skapa en punktdiagramsmatris (spridningsdiagramsmatris) i R behöver vi använda ytterligare ett paket, nämligen `GGally`. I detta paket finns funktionen `ggpairs()` som är (av författarna) skapat som en samling av `ggplot2`-instruktioner vilket möjliggör skapandet av flera spridningsdiagram inuti ett och samma diagram. Kom ihåg att ladda in detta nya paket i R innan vi fortsätter.
+
+
+```r
+require(GGally)
+```
+
+### Datamaterialet
+
+Datamaterialet som används till detta exempel är ett utav de inbyggda materialen som finns i R, nämligen `iris`. Det innehåller fyra stycken kontinuerliga variabler som beskriver olika mått på blommor och ytterligare en kategorisk variabel som anger vilken art observationen tillhör. Datamaterialet ser ut som följer:
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>1: Tabell  1: Första observationerna i Iris-data</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Sepal.Length </th>
+   <th style="text-align:right;"> Sepal.Width </th>
+   <th style="text-align:right;"> Petal.Length </th>
+   <th style="text-align:right;"> Petal.Width </th>
+   <th style="text-align:left;"> Species </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 5.1 </td>
+   <td style="text-align:right;"> 3.5 </td>
+   <td style="text-align:right;"> 1.4 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:left;"> setosa </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4.9 </td>
+   <td style="text-align:right;"> 3.0 </td>
+   <td style="text-align:right;"> 1.4 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:left;"> setosa </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4.7 </td>
+   <td style="text-align:right;"> 3.2 </td>
+   <td style="text-align:right;"> 1.3 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:left;"> setosa </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4.6 </td>
+   <td style="text-align:right;"> 3.1 </td>
+   <td style="text-align:right;"> 1.5 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:left;"> setosa </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5.0 </td>
+   <td style="text-align:right;"> 3.6 </td>
+   <td style="text-align:right;"> 1.4 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:left;"> setosa </td>
+  </tr>
+</tbody>
+</table>
+
+### Att skapa diagrammet
+
+`ggpairs()` kräver vissa argument för att kunna skapa ett diagram;
+
+   - `data`, anger vilket datamaterial som vi vill visualisera,
+   - `columns`, anger vilka kolumner ur datamaterialet som ska visualiseras,
+   - `title`, anger en titelrubrik för diagrammet,
+   - `upper`, anger vad vi vill att den *övre diagonalen* ska visa för information,
+   - `diag`, anger vad vi vill att *diagonalen* ska visa för information,
+   - `lower`, anger vad vi vill att den *nedre diagonalen* ska visa för information,
+   - `axisLabels`, anger inställningar för skalvärden i diagrammet.
+   
+Notera att `upper`, `diag`, och `lower` måste ange sina argument inbäddad i en `list()` där variabeltypen (`continuous`, `discrete` eller `combo`) måste anges först. I detta exempel kommer vi behöva skriva `list(continuous = )` då variablerna är kontinuerliga. Gå in i dokumentationen för funktionen och i *Details* står vilka andra diagram som kan visualiseras i de olika områdena av matrisen.
+
+Nedanstående kod kommer skapa spridningsdiagram i den nedre diagonalen över de fyra kontinuerliga variablerna som ligger på position `1:4` i datamaterialet `iris`. Vi väljer också här att plocka bort skalvärden på axlarna då syftet med dessa spridningsdiagram är att visa sambandet mellan variabler, och inte specifika värden som variablerna eller observationer förhåller sig till. Att vi tar bort skalvärden möjliggör också en större rityta som behövs om vi har ett flertal variabler som ska visualiseras. Vi väljer också här att ange att den diagonalen och den övre diagonalen ska vara tom.
+   
+
+```r
+p <- ggpairs(data = iris,
+             columns = 1:4,
+             title = "Samband mellan mått på blommor",
+             upper = list(continuous = "points"),
+             diag = list(continuous = "blankDiag"),
+             lower = list(continuous = "blank"),
+             axisLabels = "none"
+             ) 
+
+p
+```
+
+<img src="/teaching/732g45/5-visualisering-i-3-dimensioner_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" />
+
+Som tur är finns det möjlighet att ändra delar av diagrammet med "vanlig" `ggplot2`-kod för att förtydliga och snygga till diagrammet.
+
+
+```r
+p <- p + theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+p
+```
+
+<img src="/teaching/732g45/5-visualisering-i-3-dimensioner_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
+
+### Färgläggning av observationer beroende på klass
+Det kan finnas tillfällen där samband mellan variabler ser olika ut beroende på en kategorisk variabel som inkluderas i datamaterialet. Detta *kan* också inkluderas i dessa diagram, men risken är att det blir för mycket information som trycks ihop på en för liten yta. Med hjälp utav den tidigare presenterade `scale_color_manual()` kan vi ändra färgerna i diagrammet, men en legend för vilka färger som hör till vilka grupper går tyvärr inte att skapa (på ett enkelt sätt)...
+
+
+```r
+ggpairs(data = iris,
+        columns = 1:4,
+        title = "Samband mellan mått på blommor",
+        upper = list(continuous = "points"),
+        diag = list(continuous = "blankDiag"),
+        lower = list(continuous = "blank"),
+        axisLabels = "none",
+        mapping = aes(color = Species)
+        ) + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_manual(values = c("black", "orange", "lightblue"))
+```
+
+<img src="/teaching/732g45/5-visualisering-i-3-dimensioner_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" />
+
+

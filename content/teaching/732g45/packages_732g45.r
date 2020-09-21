@@ -10,7 +10,7 @@ require(xtable)
 require(GGally)
 require(portfolio)
 require(kableExtra)
-library(captioner)
+require(captioner)
 tables <- captioner(prefix = "Tabell")
 figures <- captioner(prefix = "Figur")
 
