@@ -224,7 +224,7 @@ p
 
 ```
 
-Det vi kan förhålla oss till när vi anger titeln för y-axeln är att den beskriver enheten som används för att mäta axelns skalvärden. Då vi i detta fall har värden mellan $0$ och $1$ bör vi ange *Andel* som titel. Om vi skulle haft absoulta frekvenser skulle en lämplig titel varit *Antal*. Om vi istället för andelar anger skalan i procent likt tidigare diagram kan det diskuteras huruvida det behövs en y-axeltitel eftersom enheten redan är angiven på skalan. Diagrammet skulle då kunna se ut som:
+Det vi kan förhålla oss till när vi anger titeln för y-axeln är att den beskriver enheten som används för att mäta axelns skalvärden. Då vi i detta fall har värden mellan 0 och 1 bör vi ange *Andel* som titel. Om vi skulle haft absoulta frekvenser skulle en lämplig titel varit *Antal*. Om vi istället för andelar anger skalan i procent likt tidigare diagram kan det diskuteras huruvida det behövs en y-axeltitel eftersom enheten redan är angiven på skalan. Diagrammet skulle då kunna se ut som:
 
 ```{r}
 
